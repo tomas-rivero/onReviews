@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar (Android only) -->
+    <meta name="theme-color" content="#2196f3">
+    <!-- Your app title -->
+    <title>My App</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Path to Framework7 Library Bundle CSS -->
+    <link rel="stylesheet" href="../lib/framework7/framework7-bundle.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/app.css">
+
+<body>
+    <div id="app">
+
+        <div id="imagePopup" class="popup popup-about">
+
+        </div>
+        <div class="view view-main">
+            <div class="page">
+
+
+                <div class="toolbar tabbar-labels toolbar-bottom">
+
+                    <div class="toolbar-inner">
+
+                        <a href="#tab-1" class="tab-link tab-link-active">
+                            <i class="icon f7-icons">house_fill</i>
+                        </a>
+                        <a href="#tab-2" class="tab-link">
+                            <i class="icon f7-icons">layers_alt_fill</i>
+                        </a>
+                        <a href="#tab-3" class="tab-link">
+                            <i class="icon f7-icons">star_fill</i>
+                        </a>
+                        <a href="#tab-4" class="tab-link">
+                            <i class="icon f7-icons">person_fill</i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div class="page-content">
+                    <div class="tabs">
+                        <div class="tab tab-active" id="tab-1">
+                            <div class="block">
+                                <h1>Hola Tomas!</h1>
+                                <p>Que queres ver hoy?</p>
+                                <form class="searchDiv" onsubmit="searchFilm(event.preventDefault())">
+                                    <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula"
+                                        autocomplete="off">
+                                    <button onclick="searchFilm(event.preventDefault())" class="buttonSearch" value="">
+                                        <i class="iconSearch f7-icons">search</i>
+                                    </button>
+                                </form>
+                                <div id="divFilm">
+                                    <div class="page-title">Mas votadas</div>
+                                    <div id="cardCount" class="block game-cards scroll-block">
+
+                                    </div>
+                                    <footer>
+                                        <ul class="paginationDiv">
+                                            <button id="btnPrev"
+                                                class="color-white col button button-outline button-raised button-round">
+                                                <i class="iconSearch f7-icons">arrowtriangle_left</i>
+                                            </button>
+                                            <h3 id="spanPag">1</h3>
+                                            <button id="btnNext"
+                                                class="color-white col button  button-outline button-raised button-round">
+                                                <i class="iconSearch f7-icons">arrowtriangle_right</i>
+                                            </button>
+                                        </ul>
+                                    </footer>
+                                    <div class="page-title">On Demand TV</div>
+                                    <div id="cardPopu" class="block game-cards scroll-block">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab" id="tab-2">
+                            <div class="block">
+                                <div class="swiper swiper-init demo-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">Slide 1</div>
+                                        <div class="swiper-slide">Slide 2</div>
+                                        <div class="swiper-slide">Slide 3</div>
+                                        <div class="swiper-slide">Slide 4</div>
+                                        <div class="swiper-slide">Slide 5</div>
+                                        <div class="swiper-slide">Slide 6</div>
+                                        <div class="swiper-slide">Slide 7</div>
+                                        <div class="swiper-slide">Slide 8</div>
+                                        <div class="swiper-slide">Slide 9</div>
+                                        <div class="swiper-slide">Slide 10</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab" id="tab-3">
+                            <div class="block">
+                                <h1>Contenido de tercera pagina</h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
+                                    odio numquam ab, qui,
+                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
+                                    consequatur, reprehenderit
+                                    similique!</p>
+                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                                    iste eos perspiciatis
+                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
+                                    dicta architecto saepe.</p>
+                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
+                                    libero beatae ut eveniet
+                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
+                                    ut fugiat!</p>
+                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
+                                    sit quisquam soluta,
+                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
+                                    voluptatem eius aliquam.
+                                    Sunt, ad aliquam!</p>
+                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
+                                    fugit impedit qui
+                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
+                                    perspiciatis aliquam ipsam vel
+                                    reprehenderit!</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
+                                    odio numquam ab, qui,
+                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
+                                    consequatur, reprehenderit
+                                    similique!</p>
+                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                                    iste eos perspiciatis
+                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
+                                    dicta architecto saepe.</p>
+                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
+                                    libero beatae ut eveniet
+                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
+                                    ut fugiat!</p>
+                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
+                                    sit quisquam soluta,
+                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
+                                    voluptatem eius aliquam.
+                                    Sunt, ad aliquam!</p>
+                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
+                                    fugit impedit qui
+                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
+                                    perspiciatis aliquam ipsam vel
+                                    reprehenderit!</p>
+                            </div>
+                        </div>
+                        <div class="tab" id="tab-4">
+                            <div class="block">
+                                <h1>Contenido de cuarta pagina</h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
+                                    odio numquam ab, qui,
+                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
+                                    consequatur, reprehenderit
+                                    similique!</p>
+                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                                    iste eos perspiciatis
+                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
+                                    dicta architecto saepe.</p>
+                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
+                                    libero beatae ut eveniet
+                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
+                                    ut fugiat!</p>
+                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
+                                    sit quisquam soluta,
+                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
+                                    voluptatem eius aliquam.
+                                    Sunt, ad aliquam!</p>
+                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
+                                    fugit impedit qui
+                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
+                                    perspiciatis aliquam ipsam vel
+                                    reprehenderit!</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
+                                    odio numquam ab, qui,
+                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
+                                    consequatur, reprehenderit
+                                    similique!</p>
+                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                                    iste eos perspiciatis
+                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
+                                    dicta architecto saepe.</p>
+                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
+                                    libero beatae ut eveniet
+                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
+                                    ut fugiat!</p>
+                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
+                                    sit quisquam soluta,
+                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
+                                    voluptatem eius aliquam.
+                                    Sunt, ad aliquam!</p>
+                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
+                                    fugit impedit qui
+                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
+                                    perspiciatis aliquam ipsam vel
+                                    reprehenderit!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Path to Framework7 Library Bundle JS-->
+    <script type="text/javascript" src="../lib/framework7/framework7-bundle.min.js">
+
+    </script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="../js/my-app.js"></script>
+
+</body>
+
+</html>
