@@ -77,8 +77,6 @@
 }
 .toolbar {
   bottom: 2% !important;
-  border-radius: 30px;
-  width: 95% !important;
 }
 
 .searchInput {
@@ -129,6 +127,32 @@
   color: #000;
 }
 
+#searchGenrer {
+  display: flex;
+  align-items: center;
+  overflow: scroll;
+  height: 100%;
+  margin-bottom: 3%;
+}
+
+.tag {
+  color: white;
+  padding: 10px 20px;
+  background: rgb(80, 20, 148);
+  border-radius: 50px;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 1s;
+  margin-bottom: 3%;
+}
+#clearBtn{
+  width: 100px;
+}
+.tag.highlight {
+  transition: all 1s;
+  background: rgb(30, 18, 44);
+}
+
 .card {
   margin: 0 !important;
   margin-left: 1% !important;
@@ -162,6 +186,7 @@
   -moz-user-select: none;
   user-select: none;
   margin-bottom: 30px;
+  min-height: 390px;
 }
 
 .scroll-block-item {
@@ -264,6 +289,11 @@
 .iconX:hover {
   background: rgba(64, 49, 78);
 }
+.divFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .trailerDiv {
   width: 100% !important;
 }
@@ -317,11 +347,13 @@ iframe {
   height: 45vh;
   margin-bottom: 5% !important;
 }
-.creditsDiv a > div:nth-child(2),
-div:last-child {
+
+.creditsDiv a div:nth-child(2),
+.creditsDiv a div:last-child {
   margin-bottom: 0 !important;
   color: var(--main-bg-color);
 }
+
 .tagline {
   color: var(--fourth-bg-color) !important;
 }
@@ -357,7 +389,7 @@ footer {
   flex-flow: row wrap;
   gap: 10%;
   padding: 0;
-  margin: 15px;
+  margin: 10px 0px 10px 0;
 }
 .paginationDiv button {
   word-wrap: break-word;

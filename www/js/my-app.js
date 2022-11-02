@@ -19,7 +19,7 @@ const cardPopup = document.getElementById('cardPopu');
 const imagePopup = document.getElementById('imagePopup');
 
 const divFilm = document.getElementById('divFilm');
-
+const clearButton = document.getElementById('clearBtn');
 const film = document.getElementById('searchInput');
 
 const prev = document.getElementById('btnPrev');
@@ -64,6 +64,85 @@ $$(document).on('page:init', function (e) {
 $$(document).on('page:init', '.page[data-name="readMore"]', function (e) {
   // console.log(page);
 });
+
+const genres = [
+  {
+    id: 28,
+    name: 'Action',
+  },
+  {
+    id: 12,
+    name: 'Adventure',
+  },
+  {
+    id: 16,
+    name: 'Animation',
+  },
+  {
+    id: 35,
+    name: 'Comedy',
+  },
+  {
+    id: 80,
+    name: 'Crime',
+  },
+  {
+    id: 99,
+    name: 'Documentary',
+  },
+  {
+    id: 18,
+    name: 'Drama',
+  },
+  {
+    id: 10751,
+    name: 'Family',
+  },
+  {
+    id: 14,
+    name: 'Fantasy',
+  },
+  {
+    id: 36,
+    name: 'History',
+  },
+  {
+    id: 27,
+    name: 'Horror',
+  },
+  {
+    id: 10402,
+    name: 'Music',
+  },
+  {
+    id: 9648,
+    name: 'Mystery',
+  },
+  {
+    id: 10749,
+    name: 'Romance',
+  },
+  {
+    id: 878,
+    name: 'Science/Fiction',
+  },
+  {
+    id: 10770,
+    name: 'TV/Movie',
+  },
+  {
+    id: 53,
+    name: 'Thriller',
+  },
+  {
+    id: 10752,
+    name: 'War',
+  },
+  {
+    id: 37,
+    name: 'Western',
+  },
+];
 
 const searchFilm = () => {
   if (film.value !== '') {
@@ -385,6 +464,82 @@ const searchFilm = () => {
   }
 };
 
+const searchGenrer = document.getElementById('searchGenrer');
+let selectedGenre = [];
+
+setGenre();
+
+function setGenre() {
+  searchGenrer.innerHTML = '';
+
+  genres.forEach((genre) => {
+    const t = document.createElement('div');
+    t.classList.add('tag');
+    t.id = genre.id;
+    t.innerText = genre.name;
+    t.addEventListener('click', () => {
+      if (selectedGenre.length == 0) {
+        selectedGenre.push(genre.id);
+      } else {
+        if (selectedGenre.includes(genre.id)) {
+          selectedGenre.forEach((id, idx) => {
+            if (id == genre.id) {
+              selectedGenre.splice(idx, 1);
+            }
+          });
+        } else {
+          selectedGenre.push(genre.id);
+        }
+      }
+      console.log(selectedGenre);
+      getMoviesCount(
+        apiUrlCount + '&with_genres=' + encodeURI(selectedGenre.join(','))
+      );
+      highlightSelection();
+    });
+    searchGenrer.append(t);
+  });
+}
+
+function highlightSelection() {
+  spanPag.innerHTML = '1';
+  page = 1;
+  const tags = document.querySelectorAll('.tag');
+  tags.forEach((tag) => {
+    tag.classList.remove('highlight');
+  });
+  clearBtn();
+  if (selectedGenre.length != 0) {
+    selectedGenre.forEach((id) => {
+      const hightlightedTag = document.getElementById(id);
+      hightlightedTag.classList.add('highlight');
+    });
+  }
+}
+
+function clearBtn() {
+  if (selectedGenre.length >= 1) {
+    let clearBtn = document.getElementById('clear');
+    if (clearBtn) {
+      clearBtn.classList.add('highlight');
+    } else {
+      let clear = document.createElement('div');
+      clear.classList.add('tag', 'highlight');
+      clear.id = 'clear';
+      clear.innerText = 'Clear x';
+      clear.addEventListener('click', () => {
+        selectedGenre = [];
+        setGenre();
+        getMoviesCount(apiUrlCount);
+        clearButton.innerHTML = '';
+      });
+      clearButton.append(clear);
+    }
+  } else {
+    clearButton.innerHTML = '';
+  }
+}
+
 getMoviesCount(apiUrlCount);
 
 function getMoviesCount(url) {
@@ -436,7 +591,15 @@ const getMoviesByVoteCount = (data) => {
               release_date,
               credits,
               trailers,
+              runtime,
             } = results;
+
+            function toHoursAndMinutes(runtime) {
+              const hours = Math.floor(runtime / 60);
+              const minutes = runtime % 60;
+              return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
+            }
+
             const movieEl = document.createElement('div');
             movieEl.classList.add('view');
             movieEl.classList.add('view-init');
@@ -455,7 +618,12 @@ const getMoviesByVoteCount = (data) => {
                   });min-height:300px" class="card-header align-items-flex-end">
                  </div>
                   <div class="card-content card-content-padding">
+                    <div class="divFlex">
                     <h1 class="noStyle">${title}</h1>
+                    <h4 class="noStyle">Duracion: ${toHoursAndMinutes(
+                      runtime
+                    )}</h4>
+                    </div>
                     <p>${tagline}</p>
                     <p>${overview}</p>
                     <div class="containerGenre">
@@ -645,6 +813,11 @@ const getMoviesByPopup = (data) => {
               first_air_date,
               credits,
             } = results;
+            function toHoursAndMinutes(runtime) {
+              const hours = Math.floor(runtime / 60);
+              const minutes = runtime % 60;
+              return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
+            }
             const movieEl = document.createElement('div');
             movieEl.classList.add('view');
             movieEl.classList.add('view-init');
@@ -724,8 +897,7 @@ const getMoviesByPopup = (data) => {
             const { AR } = results;
             const watchDiv = document.getElementById('watchDiv');
             AR.flatrate.map((watches) => {
-              const watch = document.createElement('a');
-              watch.setAttribute('href', 'google.com');
+              const watch = document.createElement('div');
               WATCHES.push(watches.logo_path);
               WATCHES.push(watches.provider_name);
               watch.innerHTML = `
@@ -786,12 +958,20 @@ prev.addEventListener('click', () => {
   if (page > 1) {
     page--;
     spanPag.innerHTML = page;
-    getMoviesCount(
-      baseUrl +
-        '/discover/movie?' +
-        apiKey +
-        `&page=${page}&sort_by=vote_count.desc&`
-    );
+    if (selectedGenre.length >= 1) {
+      getMoviesCount(
+        apiUrlCount +
+          '&with_genres=' +
+          encodeURI(selectedGenre.join(',') + `&page=${page}`)
+      );
+    } else {
+      getMoviesCount(
+        baseUrl +
+          '/discover/movie?' +
+          apiKey +
+          `&page=${page}&sort_by=vote_count.desc&`
+      );
+    }
   }
 });
 
@@ -799,11 +979,19 @@ next.addEventListener('click', () => {
   if (page < 50) {
     page++;
     spanPag.innerHTML = page;
-    getMoviesCount(
-      baseUrl +
-        '/discover/movie?' +
-        apiKey +
-        `&page=${page}&sort_by=vote_count.desc&`
-    );
+    if (selectedGenre.length >= 1) {
+      getMoviesCount(
+        apiUrlCount +
+          '&with_genres=' +
+          encodeURI(selectedGenre.join(',') + `&page=${page}`)
+      );
+    } else {
+      getMoviesCount(
+        baseUrl +
+          '/discover/movie?' +
+          apiKey +
+          `&page=${page}&sort_by=vote_count.desc&`
+      );
+    }
   }
 });
