@@ -12,13 +12,15 @@
     <!-- Your app title -->
     <title>My App</title>
 
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <!-- Path to Framework7 Library Bundle CSS -->
-    <link rel="stylesheet" href="../lib/framework7/framework7-bundle.min.css">
+    <link rel="stylesheet" href="./lib/framework7/framework7-bundle.min.css">
     <!-- Path to your custom app styles-->
-    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="./css/app.css">
 
 <body>
+    <div id="overlay"></div>
+
     <div id="app">
 
         <div id="imagePopup" class="popup popup-about">
@@ -54,7 +56,8 @@
 
 
 
-                <div class="page-content">
+                <div id="pageContent" class="page-content">
+
                     <div class="tabs">
                         <div class="tab tab-active" id="tab-1">
                             <div class="block">
@@ -172,53 +175,33 @@
                         </div>
                         <div class="tab" id="tab-4">
                             <div class="block">
-                                <h1>Contenido de cuarta pagina</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
-                                    odio numquam ab, qui,
-                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
-                                    consequatur, reprehenderit
-                                    similique!</p>
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste eos perspiciatis
-                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
-                                    dicta architecto saepe.</p>
-                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
-                                    libero beatae ut eveniet
-                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
-                                    ut fugiat!</p>
-                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
-                                    sit quisquam soluta,
-                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
-                                    voluptatem eius aliquam.
-                                    Sunt, ad aliquam!</p>
-                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
-                                    fugit impedit qui
-                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
-                                    perspiciatis aliquam ipsam vel
-                                    reprehenderit!</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
-                                    odio numquam ab, qui,
-                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
-                                    consequatur, reprehenderit
-                                    similique!</p>
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste eos perspiciatis
-                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
-                                    dicta architecto saepe.</p>
-                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
-                                    libero beatae ut eveniet
-                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
-                                    ut fugiat!</p>
-                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
-                                    sit quisquam soluta,
-                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
-                                    voluptatem eius aliquam.
-                                    Sunt, ad aliquam!</p>
-                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
-                                    fugit impedit qui
-                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
-                                    perspiciatis aliquam ipsam vel
-                                    reprehenderit!</p>
+                                <div class="imgProfileDiv">
+                                    <img src="./img/profile3.png" alt="" class="imgProfile">
+                                    <p>Tomas Rivero</p>
+                                </div>
+                                <div class="userOptionsDiv">
+                                    <ul>
+                                        <li>
+                                            <a href="/config/">Ajustes de la aplicacion</a>
+                                        </li>
+                                        <li>
+                                            <button>Cuenta</button>
+                                        </li>
+                                        <li>
+                                            <button>Sobre los creadores</button>
+                                        </li>
+                                        <li>
+                                            <button>Ayuda</button>
+                                        </li>
+                                        <li>
+                                            <button>Cerrar sesion</button>
+                                        </li>
+                                        <li>
+                                            <p>Version 0.0.1</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -228,12 +211,12 @@
         </div>
 
     </div>
-    <!-- Path to Framework7 Library Bundle JS-->
-    <script type="text/javascript" src="../lib/framework7/framework7-bundle.min.js">
 
-    </script>
-    <!-- Path to your app js-->
-    <script type="text/javascript" src="../js/my-app.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="./lib/framework7/framework7-bundle.min.js"></script>
+    <!--<script type="text/javascript" src="lib/framework7/framework7.js"></script>-->
+    <script type="text/javascript" src="./js/my-app.js"></script>
+
 
 </body>
 
