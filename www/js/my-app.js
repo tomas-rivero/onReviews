@@ -8,16 +8,14 @@ const apiUrlCount =
 
 const apiUrlPopup = baseUrl + '/trending/tv/week?' + apiKey;
 
+const apiUrlSellers = baseUrl + '/trending/all/week?' + apiKey;
+
 const imgUrl = 'https://image.tmdb.org/t/p/w500';
 
 const searchUrl = baseUrl + '/search/movie?' + apiKey;
 
 const pageContent = document.getElementById('pageContent');
-
-const P = document.querySelectorAll('p');
-const TITLES = document.querySelectorAll('h1', 'h2', 'h3', 'h4', 'h5');
-const DIVS = document.querySelectorAll('div','#name');
-
+const swiperWrapper = document.getElementById('swiperWrapper');
 const cardCount = document.getElementById('cardCount');
 
 const cardPopup = document.getElementById('cardPopu');
@@ -25,10 +23,13 @@ const cardPopup = document.getElementById('cardPopu');
 const imagePopup = document.getElementById('imagePopup');
 
 const divFilm = document.getElementById('divFilm');
+
 const clearButton = document.getElementById('clearBtn');
+
 const film = document.getElementById('searchInput');
 
 const prev = document.getElementById('btnPrev');
+
 const next = document.getElementById('btnNext');
 
 const spanPag = document.getElementById('spanPag');
@@ -57,6 +58,11 @@ var app = new Framework7({
       path: '/config/',
       url: './config.html',
     },
+    {
+      name: 'about',
+      path: '/about/',
+      url: './about.html',
+    },
   ],
 
   // ... other parameters
@@ -71,19 +77,16 @@ $$(document).on('deviceready', function () {
 
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
-  //   overlay.innerHTML = '';
-  //   overlay.classList.add('overlay');
-  //   const modal = document.createElement('div');
-  //   modal.classList.add('modal');
-  //   modal.innerHTML = `
-  // <img src="./img/logoModal.png">
-  // <h2>OnReviews</h2>
-  // `;
-  //   overlay.appendChild(modal);
-  //   setTimeout(() => {
-  //     overlay.classList.add('hidden');
-  //   }, 1500);
-
+  var swiper = app.swiper.create('.swiper', {
+    speed: 400,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  });
   setModal();
   function setModal() {
     overlay.innerHTML = '';
@@ -98,6 +101,34 @@ $$(document).on('page:init', function (e) {
     setTimeout(() => {
       overlay.classList.add('hidden');
     }, 1500);
+  }
+  getSellers(apiUrlSellers);
+
+  async function getSellers(url) {
+    await fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        getTrending(data.results);
+      });
+  }
+
+  function getTrending(data) {
+    data.map((movie) => {
+      console.log(movie);
+      const { poster_path } = movie;
+
+      const swiperSlide = document.createElement('div');
+      swiperSlide.classList.add('swiper-slide');
+
+      swiperSlide.innerHTML = `
+   
+        <div class="imgSwiper" style="background-image: linear-gradient( rgba(15, 32, 39, 0) 0%, rgba(15, 32, 39, 1) 100% ), url('${imgUrl}${poster_path}')">
+     
+        </div>
+
+      `;
+      swiperWrapper.appendChild(swiperSlide);
+    });
   }
 
   const genres = [
@@ -719,34 +750,15 @@ $$(document).on('page:init', function (e) {
 });
 
 $$(document).on('page:init', '.page[data-name="config"]', function (e) {
-  const pageContentConfig = document.getElementById('pageContentConfig');
-  var toggle = app.toggle.create({
-    el: '.toggle',
-    on: {
-      change: function () {
-        if (toggle.checked) {
-          console.log('a');
-        } else {
-          pageContent.classList.add('white');
-          pageContentConfig.classList.add('white');
-          console.log(P);
-          P.forEach((item) => {
-            item.classList.add('whiteP');
-          });
-          TITLES.forEach((item) => {
-            item.classList.add('whiteP');
-          });
-          DIVS.forEach((item) => {
-            item.classList.add('whiteP');
-          });
-        }
-      },
-    },
-  });
+  console.log('otra pagina');
+});
+$$(document).on('page:init', '.page[data-name="about"]', function (e) {
+  console.log('otra pagina');
 });
 
 const searchFilm = () => {
   if (film.value !== '') {
+    searchGenrer.innerHTML = '';
     divFilm.innerHTML = '';
     const url =
       baseUrl + '/search/multi?' + apiKey + `&page=1&query=${film.value}`;
@@ -1055,11 +1067,11 @@ const searchFilm = () => {
       });
   } else {
     divFilm.innerHTML = '';
-    const searchResults = document.createElement('a');
+    const searchResults = document.createElement('div');
     searchResults.innerHTML = `
-    <div>
+
     <p>No hay películas que coincidan con tu consulta. Por favor, sea mas detallado o vuelva al <a onclick='window.location.reload()'>inicio</a>.</p>
-    </div>
+
   `;
     divFilm.appendChild(searchResults);
   }

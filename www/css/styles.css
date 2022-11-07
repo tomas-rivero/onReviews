@@ -1,4 +1,3 @@
-
 :root {
   --main-bg-color: #24242e;
   --first-bg-color: #40304f;
@@ -6,6 +5,7 @@
   --third-bg-color: #c0b39f;
   --fourth-bg-color: #fff;
 }
+
 ul,
 li {
   margin: 0;
@@ -15,22 +15,50 @@ li {
   outline: none;
   background: none;
 }
-.white {
-  background: white !important;
-  color: #000;
+.md .navbar-inner {
+  justify-content: center !important;
+  background: linear-gradient(
+    to top,
+    rgba(15, 32, 39, 0) 0%,
+    rgba(15, 32, 39, 1) 100%
+  );
 }
-.whiteP {
-  color: #000 !important; 
+.toolbar-inner {
+  background: #fff;
+}
+#overlay {
+  width: 100%;
+  height: 100%;
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .overlay {
   width: 100%;
   height: 100%;
-  background: rgb(0, 0, 0);
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    58deg,
-    rgba(0, 0, 0, 1) 10%,
-    rgba(58, 14, 107, 1) 100%
-  );
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   position: absolute;
   z-index: 1000;
   visibility: visible;
@@ -50,7 +78,7 @@ li {
   height: 100%;
 }
 .modal h2 {
-  color: #fff;
+  color: #fff !important;
   border-top: 1px solid #fff;
 }
 .modal img {
@@ -64,30 +92,55 @@ li {
 
 .page-content::-webkit-scrollbar,
 .game-cards::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 0;
+  height: 0;
 }
 
-.page-content::-webkit-scrollbar-thumb,
-.game-cards::-webkit-scrollbar-thumb {
-  background-color: var(--fourth-bg-color);
-  border-radius: 20px;
+#pageContent {
+  color: #fff;
 }
-
-.page-content::-webkit-scrollbar-track,
-.game-cards::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
 .page-content {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    58deg,
-    rgba(0, 0, 0, 1) 10%,
-    rgba(58, 14, 107, 1) 100%
-  );
+  background: #0f2027;
+  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  padding: 0 !important;
 }
-
+#tab-1 {
+  background: #0f2027;
+  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+}
+.swiperContainer {
+  width: 100%;
+  height: 70vh;
+  z-index: 3;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+.imgSwiper {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+.titleSwiper {
+  font-size: 30px;
+  position: absolute;
+  bottom: 15px;
+  margin: auto;
+  color: var(--fourth-bg-color);
+}
+.subtitleSwiper {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  margin: auto;
+  color: var(--fourth-bg-color);
+  margin-top: 15px;
+}
 .third {
   background: var(--third-bg-color);
 }
@@ -95,7 +148,14 @@ li {
 .fourthColor {
   color: var(--fourth-bg-color) !important;
 }
-
+.divGradient {
+  margin-top: 0 !important;
+  background-image: linear-gradient(
+    to top,
+    rgba(15, 32, 39, 0) 0%,
+    rgba(15, 32, 39, 1) 100%
+  );
+}
 .f7-icons {
   color: var(--main-bg-color);
 }
@@ -109,9 +169,7 @@ li {
   border: none;
   color: #fff;
 }
-.page-title {
-  color: var(--fourth-bg-color) !important;
-}
+
 .searchDiv {
   width: 100%;
   position: relative;
@@ -135,9 +193,6 @@ li {
 .divToolbar {
   margin: auto;
   bottom: 0;
-}
-.toolbar {
-  bottom: 2% !important;
 }
 
 .searchInput {
@@ -199,7 +254,7 @@ li {
 .tag {
   color: white;
   padding: 10px 20px;
-  background: rgb(80, 20, 148);
+  background: #1d3742;
   border-radius: 50px;
   margin: 5px;
   cursor: pointer;
@@ -247,7 +302,7 @@ li {
   -moz-user-select: none;
   user-select: none;
   margin-bottom: 30px;
-  min-height: 390px;
+  min-height: 350px;
 }
 
 .scroll-block-item {
@@ -416,7 +471,7 @@ iframe {
 }
 
 .tagline {
-  color: var(--fourth-bg-color) !important;
+  color: var(--fourth-bg-color);
 }
 .creditsDiv::-webkit-scrollbar-thumb {
   background-color: var(--main-bg-color);
@@ -456,7 +511,7 @@ footer {
   word-wrap: break-word;
   width: 30%;
   min-width: 100px;
-  background: rgba(64, 48, 79, 0.5);
+  background: #2c5364;
   padding: 20px;
   margin: 10px;
 }
@@ -468,6 +523,19 @@ footer {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+.imgProfileDiv h3,
+.imgProfileDiv p {
+  margin: 0;
+}
+.imgProfileDiv h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.imgProfileDiv p {
+  font-size: 11px;
+  margin-bottom: 10%;
 }
 .imgProfile {
   width: 150px;
@@ -482,6 +550,9 @@ footer {
 .userOptionsDiv {
   width: 100%;
 }
+.userOptionsDiv a {
+  color: #fff;
+}
 .userOptionsDiv ul {
   list-style: none;
   padding: 0;
@@ -489,20 +560,11 @@ footer {
 
 .userOptionsDiv li {
   height: 35px;
-  border-bottom: 1px solid #fff;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
-.userOptionsDiv li button {
-  color: #fff;
-  display: flex;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  background: none;
+.userOptionsDiv hr {
+  border: 1px solid #fff;
 }
-
 .userOptionsDiv li:last-child {
   font-size: 12px;
   border: none;

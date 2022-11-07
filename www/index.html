@@ -22,18 +22,18 @@
     <div id="overlay"></div>
 
     <div id="app">
-
-        <div id="imagePopup" class="popup popup-about">
-
-        </div>
         <div class="view view-main">
             <div class="page">
+                <div class="navbar">
+                    <div class="navbar-inner sliding">
+                  
+                        <div class="title">OnReviews</div>
+                    </div>
+                </div>
 
 
                 <div class="toolbar tabbar-labels toolbar-bottom">
-
                     <div class="toolbar-inner">
-
                         <a href="#tab-1" class="tab-link tab-link-active">
                             <i class="icon f7-icons">house_fill</i>
                         </a>
@@ -45,128 +45,146 @@
                         </a>
                         <a href="#tab-4" class="tab-link">
                             <i class="icon f7-icons">person_fill</i>
-
                         </a>
-
                     </div>
-
                 </div>
 
 
+                <div id="pageContent" class="page-content hide-navbar-on-scroll">
 
-
-
-                <div id="pageContent" class="page-content">
 
                     <div class="tabs">
                         <div class="tab tab-active" id="tab-1">
-                            <div class="block">
-                                <h1>Hola Tomas!</h1>
-                                <p>Que queres ver hoy?</p>
-                                <form class="searchDiv" onsubmit="searchFilm(event.preventDefault())">
-                                    <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula"
-                                        autocomplete="off">
-                                    <button onclick="searchFilm(event.preventDefault())" class="buttonSearch" value="">
-                                        <i class="iconSearch f7-icons">search</i>
-                                    </button>
-                                </form>
-
-                                <div id="searchGenrer">
-
-                                </div>
-                                <div id="clearBtn">
-
-                                </div>
-
-                                <div id="divFilm">
-                                    <div class="page-title">Los mas destacado.</div>
-                                    <div id="cardCount" class="block game-cards scroll-block">
+                            <div class="swiperContainer">
+                                <div class="swiper swiper-init demo-swiper"
+                                    data-pagination='{"el": ".swiper-pagination"}'>
+                                    <div class="swiper-pagination"></div>
+                                    <div class="swiper-wrapper" id="swiperWrapper">
 
                                     </div>
-                                    <footer>
-                                        <ul class="paginationDiv">
-                                            <button id="btnPrev"
-                                                class="color-white col button button-outline button-raised button-round">
-                                                <i class="iconSearch f7-icons">arrowtriangle_left</i>
-                                            </button>
-                                            <h3 id="spanPag">1</h3>
-                                            <button id="btnNext"
-                                                class="color-white col button  button-outline button-raised button-round">
-                                                <i class="iconSearch f7-icons">arrowtriangle_right</i>
-                                            </button>
-                                        </ul>
-                                    </footer>
-                                    <div class="page-title">On Demand TV</div>
-                                    <div id="cardPopu" class="block game-cards scroll-block">
-                                    </div>
-
                                 </div>
+                            </div>
+
+                            <div id="imagePopup" class="popup popup-about">
 
                             </div>
+
+                            <div>
+                                <div class="block divGradient">
+
+                                    <h1>Hola Tomas!</h1>
+                                    <p>Que queres ver hoy?</p>
+                                    <form class="searchDiv" onsubmit="searchFilm(event.preventDefault())">
+                                        <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula"
+                                            autocomplete="off">
+                                        <button onclick="searchFilm(event.preventDefault())" class="buttonSearch"
+                                            value="">
+                                            <i class="iconSearch f7-icons">search</i>
+                                        </button>
+                                    </form>
+
+                                    <div id="searchGenrer">
+
+                                    </div>
+                                    <div id="clearBtn">
+
+                                    </div>
+
+
+                                </div>
+                                <div class="block">
+
+
+                                    <div id="divFilm">
+                                        <div class="page-title">Los mas destacado.</div>
+                                        <div id="cardCount" class="block game-cards scroll-block">
+
+                                        </div>
+                                        <footer>
+                                            <ul class="paginationDiv">
+                                                <button id="btnPrev"
+                                                    class="color-white col button button-raised button-round">
+                                                    <i class="iconSearch f7-icons">arrowtriangle_left</i>
+                                                </button>
+                                                <h3 id="spanPag">1</h3>
+                                                <button id="btnNext"
+                                                    class="color-white col button button-raised button-round">
+                                                    <i class="iconSearch f7-icons">arrowtriangle_right</i>
+                                                </button>
+                                            </ul>
+                                        </footer>
+                                        <div class="page-title">On Demand TV</div>
+                                        <div id="cardPopu" class="block game-cards scroll-block">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
                         <div class="tab" id="tab-2">
                             <div class="block">
-                                <div class="swiper swiper-init demo-swiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">Slide 1</div>
-                                        <div class="swiper-slide">Slide 2</div>
-                                        <div class="swiper-slide">Slide 3</div>
-                                        <div class="swiper-slide">Slide 4</div>
-                                        <div class="swiper-slide">Slide 5</div>
-                                        <div class="swiper-slide">Slide 6</div>
-                                        <div class="swiper-slide">Slide 7</div>
-                                        <div class="swiper-slide">Slide 8</div>
-                                        <div class="swiper-slide">Slide 9</div>
-                                        <div class="swiper-slide">Slide 10</div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div class="tab" id="tab-3">
                             <div class="block">
                                 <h1>Contenido de tercera pagina</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores
+                                    ut,
                                     odio numquam ab, qui,
                                     alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
                                     consequatur, reprehenderit
                                     similique!</p>
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum
+                                    dolor
                                     iste eos perspiciatis
                                     vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
                                     dicta architecto saepe.</p>
-                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
+                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit
+                                    aperiam
                                     libero beatae ut eveniet
-                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
+                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste
+                                    tempora
                                     ut fugiat!</p>
-                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
+                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur
+                                    assumenda
                                     sit quisquam soluta,
                                     possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
                                     voluptatem eius aliquam.
                                     Sunt, ad aliquam!</p>
-                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
+                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse
+                                    delectus
                                     fugit impedit qui
                                     consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
                                     perspiciatis aliquam ipsam vel
                                     reprehenderit!</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores
+                                    ut,
                                     odio numquam ab, qui,
                                     alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
                                     consequatur, reprehenderit
                                     similique!</p>
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
+                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum
+                                    dolor
                                     iste eos perspiciatis
                                     vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
                                     dicta architecto saepe.</p>
-                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
+                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit
+                                    aperiam
                                     libero beatae ut eveniet
-                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
+                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste
+                                    tempora
                                     ut fugiat!</p>
-                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
+                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur
+                                    assumenda
                                     sit quisquam soluta,
                                     possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
                                     voluptatem eius aliquam.
                                     Sunt, ad aliquam!</p>
-                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
+                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse
+                                    delectus
                                     fugit impedit qui
                                     consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
                                     perspiciatis aliquam ipsam vel
@@ -176,26 +194,34 @@
                         <div class="tab" id="tab-4">
                             <div class="block">
                                 <div class="imgProfileDiv">
-                                    <img src="./img/profile3.png" alt="" class="imgProfile">
-                                    <p>Tomas Rivero</p>
+                                    <img src="./img/10.png" alt="" class="imgProfile">
+                                    <h3>Tomas Rivero</h3>
+                                    <p>trivero886@gmail.com</p>
                                 </div>
                                 <div class="userOptionsDiv">
                                     <ul>
                                         <li>
                                             <a href="/config/">Ajustes de la aplicacion</a>
                                         </li>
+                                        <hr>
                                         <li>
-                                            <button>Cuenta</button>
+
+                                            <a href="/#/">Cuenta</a>
                                         </li>
+                                        <hr>
                                         <li>
-                                            <button>Sobre los creadores</button>
+
+                                            <a href="/about/">Sobre los creadores</a>
                                         </li>
+                                        <hr>
                                         <li>
-                                            <button>Ayuda</button>
+                                            <a href="/#/">Ayuda</a>
                                         </li>
+                                        <hr>
                                         <li>
-                                            <button>Cerrar sesion</button>
+                                            <a href="/#/">Cerrar sesion</a>
                                         </li>
+                                        <hr>
                                         <li>
                                             <p>Version 0.0.1</p>
                                         </li>
