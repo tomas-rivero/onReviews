@@ -15,6 +15,76 @@ li {
   outline: none;
   background: none;
 }
+/* Login */
+#nombreLogin {
+  margin-bottom: 20px;
+}
+
+#passwordLogin {
+  margin-bottom: 20px;
+}
+
+#Login {
+  margin-bottom: 20px;
+}
+
+.googleButton {
+  margin-top: 30px;
+  text-align: center;
+}
+#googleLogin {
+  border: none;
+  background-color: none;
+}
+
+.guest {
+  text-align: center;
+}
+#guestLogin {
+  border: none;
+  background-color: none;
+}
+
+#error-text {
+  text-align: center;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  background-color: #15151b;
+  width: 70%;
+  border-radius: 5px;
+}
+
+#mail-text {
+  text-align: center;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  background-color: #15151b;
+  width: 70%;
+  border-radius: 5px;
+}
+
+/* SignUp */
+#nombreRegistro {
+  margin-bottom: 20px;
+}
+
+#passwordRegistro {
+  margin-bottom: 20px;
+}
+#passwordRegistro2 {
+  margin-bottom: 20px;
+}
+.signupForm {
+  margin-top: 50px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* Forgot Password */
+#forgotEmail {
+  margin-bottom: 20px;
+}
+
 .md .navbar-inner {
   justify-content: center !important;
   background: linear-gradient(
@@ -271,7 +341,6 @@ li {
 
 .card {
   margin: 0 !important;
-  margin-left: 1% !important;
 }
 .game-cards {
   display: flex;
@@ -296,13 +365,10 @@ li {
 }
 
 .game-cards .game-card {
-  width: var(--game-card-width);
   flex-shrink: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  margin-bottom: 30px;
-  min-height: 350px;
 }
 
 .scroll-block-item {

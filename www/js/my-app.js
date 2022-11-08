@@ -1,107 +1,223 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
-
-const baseUrl = 'https://api.themoviedb.org/3';
-const apiKey = 'api_key=2dbec8d4e8d5af1a656020c0cd8f2403';
-
-const apiUrlCount =
-  baseUrl + '/discover/movie?' + apiKey + '&page=1&sort_by=vote_count.desc&';
-
-const apiUrlPopup = baseUrl + '/trending/tv/week?' + apiKey;
-
-const apiUrlSellers = baseUrl + '/trending/all/week?' + apiKey;
-
-const imgUrl = 'https://image.tmdb.org/t/p/w500';
-
-const searchUrl = baseUrl + '/search/movie?' + apiKey;
-
-const pageContent = document.getElementById('pageContent');
-const swiperWrapper = document.getElementById('swiperWrapper');
-const cardCount = document.getElementById('cardCount');
-
-const cardPopup = document.getElementById('cardPopu');
-
-const imagePopup = document.getElementById('imagePopup');
-
-const divFilm = document.getElementById('divFilm');
-
-const clearButton = document.getElementById('clearBtn');
-
-const film = document.getElementById('searchInput');
-
-const prev = document.getElementById('btnPrev');
-
-const next = document.getElementById('btnNext');
-
-const spanPag = document.getElementById('spanPag');
-
-const overlay = document.getElementById('overlay');
-
+const overlay = document.getElementById("overlay");
 let page = 1;
 
 var $$ = Dom7;
 
 var app = new Framework7({
   // App root element
-  root: '#app',
+  root: "#app",
   // App Name
-  name: 'My App',
+  name: "My App",
   // App id
-  id: 'com.myapp.test',
+  id: "com.myapp.test",
   // Enable swipe panel
   panel: {
-    swipe: 'left',
+    swipe: "left",
   },
   // Add default routes
   routes: [
     {
-      name: 'config',
-      path: '/config/',
-      url: './config.html',
+      path: "/index/",
+      url: "index.html",
     },
     {
-      name: 'about',
-      path: '/about/',
-      url: './about.html',
+      name: "config",
+      path: "/config/",
+      url: "./config.html",
+    },
+    {
+      name: "about",
+      path: "/about/",
+      url: "./about.html",
+    },
+    {
+      path: "/register/",
+      url: "./register.html",
+    },
+    {
+      path: "/forgot/",
+      url: "./forgotPassword.html",
+    },
+    {
+      path: "/home/",
+      url: "./home.html",
     },
   ],
 
   // ... other parameters
 });
 
-var mainView = app.views.create('.view-main');
+var mainView = app.views.create(".view-main");
 
 // Handle Cordova Device Ready Event
-$$(document).on('deviceready', function () {
-  console.log('Device is ready!');
+$$(document).on("deviceready", function () {
+  console.log("Device is ready!");
 });
 
-// Option 1. Using one 'page:init' handler for all pages
-$$(document).on('page:init', function (e) {
-  var swiper = app.swiper.create('.swiper', {
-    speed: 400,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: false,
-    },
-    pagination: {
-      el: '.swiper-pagination',
-    },
-  });
+$$(document).on("page:init", function (e) {
   setModal();
   function setModal() {
-    overlay.innerHTML = '';
-    overlay.classList.add('overlay');
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
+    overlay.innerHTML = "";
+    overlay.classList.add("overlay");
+    const modal = document.createElement("div");
+    modal.classList.add("modal");
     modal.innerHTML = `
   <img src="./img/logoModal.png">
   <h2>OnReviews</h2>
   `;
     overlay.appendChild(modal);
     setTimeout(() => {
-      overlay.classList.add('hidden');
+      overlay.classList.add("hidden");
     }, 1500);
   }
+  //SignIn
+  const signinForm = document.querySelector(".loginForm");
+
+  signinForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const emailLogin = document.querySelector("#nombreLogin").value;
+    const passwordLogin = document.querySelector("#passwordLogin").value;
+    const errorText = document.getElementById("error-text");
+    var error = document.createElement("h2");
+
+    auth
+      .signInWithEmailAndPassword(emailLogin, passwordLogin)
+      .then((userCredential) => {
+        console.log("logueado ashe");
+        mainView.router.navigate("/home/");
+      })
+      .catch((err) => {
+        console.log(err.code);
+        signinForm.reset();
+        if (err.code == "auth/user-not-found") {
+          errorText.textContent = "Error: El Usuario No Existe";
+          console.log("El Usuario No Existe");
+        } else if (err.code == "auth/wrong-password") {
+          errorText.textContent = "Error: Contraseña Incorrecta";
+          console.log("Contraseña Incorrecta");
+        }
+      });
+  });
+
+  //Google Login
+  const googleButton = document.querySelector("#googleLogin");
+  googleButton.addEventListener("click", (e) => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log("google SignIN");
+        window.location.replace("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
+  //Anonimous Login
+  const guestButton = document.querySelector("#guestLogin");
+  guestButton.addEventListener("click", (e) => {
+    auth
+      .signInAnonymously()
+      .then(() => {
+        console.log("click");
+        console.log("BIENVENIDO INVITADO");
+        mainView.router.navigate("/home/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+});
+function load(event) {
+  event.preventDefault();
+  //SignUp
+  const email = document.getElementById("nombreRegistro");
+  const password = document.querySelector("#passwordRegistro");
+  const password2 = document.querySelector("#passwordRegistro2");
+  if (password == password2) {
+    console.log("Coinciden");
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log("Gracias por Registrarte");
+        mainView.router.navigate("/home/");
+      });
+  } else if (password != password2) {
+    console.log("las contraseñas no coinciden");
+  }
+}
+//Olvide Mi Contraseña
+function boton() {
+  const forgotButton = document.querySelector("#sendEmail");
+  const emailForgot = document.querySelector("#forgotEmail").value;
+  const errorText = document.getElementById("mail-text");
+  console.log(emailForgot);
+  firebase
+    .auth()
+    .sendPasswordResetEmail(emailForgot)
+    .then(() => {
+      errorText.textContent =
+        "Email enviado. Compruebe su casilla de correo electornico o spam";
+      console.log("Enviado");
+    })
+    .catch((error) => {
+      if (error.code == "auth/user-not-found") {
+        errorText.textContent = "Error: El Usuario No Existe";
+      }
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+    });
+}
+
+// TOTO
+$$(document).on("page:init", '.page[data-name="home"]', function (e) {
+  const baseUrl = "https://api.themoviedb.org/3";
+  const apiKey = "api_key=2dbec8d4e8d5af1a656020c0cd8f2403";
+
+  const apiUrlCount =
+    baseUrl + "/discover/movie?" + apiKey + "&page=1&sort_by=vote_count.desc&";
+
+  const apiUrlPopup = baseUrl + "/trending/tv/week?" + apiKey;
+
+  const apiUrlSellers = baseUrl + "/trending/all/week?" + apiKey;
+
+  const imgUrl = "https://image.tmdb.org/t/p/w500";
+
+  const searchUrl = baseUrl + "/search/movie?" + apiKey;
+
+  const pageContent = document.getElementById("pageContent");
+  const swiperWrapper = document.getElementById("swiperWrapper");
+  const cardCount = document.getElementById("cardCount");
+
+  const cardPopup = document.getElementById("cardPopu");
+
+  const imagePopup = document.getElementById("imagePopup");
+
+  const divFilm = document.getElementById("divFilm");
+
+  const clearButton = document.getElementById("clearBtn");
+
+  const film = document.getElementById("searchInput");
+
+  const prev = document.getElementById("btnPrev");
+
+  const next = document.getElementById("btnNext");
+
+  const spanPag = document.getElementById("spanPag");
+
+  setTimeout(() => {
+    new Swiper(".swiper", {
+      speed: 400,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+    });
+  }, 500);
+
   getSellers(apiUrlSellers);
 
   async function getSellers(url) {
@@ -117,8 +233,8 @@ $$(document).on('page:init', function (e) {
       console.log(movie);
       const { poster_path } = movie;
 
-      const swiperSlide = document.createElement('div');
-      swiperSlide.classList.add('swiper-slide');
+      const swiperSlide = document.createElement("div");
+      swiperSlide.classList.add("swiper-slide");
 
       swiperSlide.innerHTML = `
    
@@ -134,96 +250,96 @@ $$(document).on('page:init', function (e) {
   const genres = [
     {
       id: 28,
-      name: 'Action',
+      name: "Action",
     },
     {
       id: 12,
-      name: 'Adventure',
+      name: "Adventure",
     },
     {
       id: 16,
-      name: 'Animation',
+      name: "Animation",
     },
     {
       id: 35,
-      name: 'Comedy',
+      name: "Comedy",
     },
     {
       id: 80,
-      name: 'Crime',
+      name: "Crime",
     },
     {
       id: 99,
-      name: 'Documentary',
+      name: "Documentary",
     },
     {
       id: 18,
-      name: 'Drama',
+      name: "Drama",
     },
     {
       id: 10751,
-      name: 'Family',
+      name: "Family",
     },
     {
       id: 14,
-      name: 'Fantasy',
+      name: "Fantasy",
     },
     {
       id: 36,
-      name: 'History',
+      name: "History",
     },
     {
       id: 27,
-      name: 'Horror',
+      name: "Horror",
     },
     {
       id: 10402,
-      name: 'Music',
+      name: "Music",
     },
     {
       id: 9648,
-      name: 'Mystery',
+      name: "Mystery",
     },
     {
       id: 10749,
-      name: 'Romance',
+      name: "Romance",
     },
     {
       id: 878,
-      name: 'Science/Fiction',
+      name: "Science/Fiction",
     },
     {
       id: 10770,
-      name: 'TV/Movie',
+      name: "TV/Movie",
     },
     {
       id: 53,
-      name: 'Thriller',
+      name: "Thriller",
     },
     {
       id: 10752,
-      name: 'War',
+      name: "War",
     },
     {
       id: 37,
-      name: 'Western',
+      name: "Western",
     },
   ];
 
-  const searchGenrer = document.getElementById('searchGenrer');
+  const searchGenrer = document.getElementById("searchGenrer");
   let selectedGenre = [];
 
   setGenre();
 
   function setGenre() {
-    searchGenrer.innerHTML = '';
+    searchGenrer.innerHTML = "";
 
     genres.forEach((genre) => {
-      const t = document.createElement('div');
-      t.classList.add('tag');
+      const t = document.createElement("div");
+      t.classList.add("tag");
       t.id = genre.id;
       t.innerText = genre.name;
-      t.addEventListener('click', () => {
+      t.addEventListener("click", () => {
         if (selectedGenre.length == 0) {
           selectedGenre.push(genre.id);
         } else {
@@ -239,7 +355,7 @@ $$(document).on('page:init', function (e) {
         }
         console.log(selectedGenre);
         getMoviesCount(
-          apiUrlCount + '&with_genres=' + encodeURI(selectedGenre.join(','))
+          apiUrlCount + "&with_genres=" + encodeURI(selectedGenre.join(","))
         );
         highlightSelection();
       });
@@ -248,41 +364,41 @@ $$(document).on('page:init', function (e) {
   }
 
   function highlightSelection() {
-    spanPag.innerHTML = '1';
+    spanPag.innerHTML = "1";
     page = 1;
-    const tags = document.querySelectorAll('.tag');
+    const tags = document.querySelectorAll(".tag");
     tags.forEach((tag) => {
-      tag.classList.remove('highlight');
+      tag.classList.remove("highlight");
     });
     clearBtn();
     if (selectedGenre.length != 0) {
       selectedGenre.forEach((id) => {
         const hightlightedTag = document.getElementById(id);
-        hightlightedTag.classList.add('highlight');
+        hightlightedTag.classList.add("highlight");
       });
     }
   }
 
   function clearBtn() {
     if (selectedGenre.length >= 1) {
-      let clearBtn = document.getElementById('clear');
+      let clearBtn = document.getElementById("clear");
       if (clearBtn) {
-        clearBtn.classList.add('highlight');
+        clearBtn.classList.add("highlight");
       } else {
-        let clear = document.createElement('div');
-        clear.classList.add('tag', 'highlight');
-        clear.id = 'clear';
-        clear.innerText = 'Clear x';
-        clear.addEventListener('click', () => {
+        let clear = document.createElement("div");
+        clear.classList.add("tag", "highlight");
+        clear.id = "clear";
+        clear.innerText = "Clear x";
+        clear.addEventListener("click", () => {
           selectedGenre = [];
           setGenre();
           getMoviesCount(apiUrlCount);
-          clearButton.innerHTML = '';
+          clearButton.innerHTML = "";
         });
         clearButton.append(clear);
       }
     } else {
-      clearButton.innerHTML = '';
+      clearButton.innerHTML = "";
     }
   }
 
@@ -300,32 +416,32 @@ $$(document).on('page:init', function (e) {
     let GENRES = [];
     let WATCHES = [];
     let TRAILER = [];
-    cardCount.innerHTML = '';
+    cardCount.innerHTML = "";
     data.forEach((movie) => {
       const voteCount = movie.vote_average.toFixed(1);
 
-      const movieEl = document.createElement('a');
+      const movieEl = document.createElement("a");
 
-      movieEl.setAttribute('id', movie.id);
-      movieEl.classList.add('game-card');
-      movieEl.classList.add('scroll-block-item');
+      movieEl.setAttribute("id", movie.id);
+      movieEl.classList.add("game-card");
+      movieEl.classList.add("scroll-block-item");
 
-      movieEl.addEventListener('click', function () {
-        imagePopup.innerHTML = '';
+      movieEl.addEventListener("click", function () {
+        imagePopup.innerHTML = "";
         const idUrl =
           baseUrl +
-          '/movie/' +
+          "/movie/" +
           movie.id +
-          '?' +
+          "?" +
           apiKey +
-          '&language=es&append_to_response=credits,trailers';
+          "&language=es&append_to_response=credits,trailers";
         const viewUrl =
           baseUrl +
-          '/movie/' +
+          "/movie/" +
           movie.id +
-          '/watch/' +
-          'providers' +
-          '?' +
+          "/watch/" +
+          "providers" +
+          "?" +
           apiKey;
         getIdUrl(idUrl, viewUrl);
         async function getIdUrl(url, url2) {
@@ -349,12 +465,12 @@ $$(document).on('page:init', function (e) {
               function toHoursAndMinutes(runtime) {
                 const hours = Math.floor(runtime / 60);
                 const minutes = runtime % 60;
-                return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
+                return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
               }
 
-              const movieEl = document.createElement('div');
-              movieEl.classList.add('view');
-              movieEl.classList.add('view-init');
+              const movieEl = document.createElement("div");
+              movieEl.classList.add("view");
+              movieEl.classList.add("view-init");
 
               movieEl.innerHTML = `
               <div class="page">
@@ -398,10 +514,10 @@ $$(document).on('page:init', function (e) {
 
               imagePopup.appendChild(movieEl);
               if (genres.length > 0) {
-                const genreDiv = document.getElementById('genreDiv');
+                const genreDiv = document.getElementById("genreDiv");
                 genres.map((generos) => {
-                  const genre = document.createElement('h3');
-                  genre.classList.add('textGenres');
+                  const genre = document.createElement("h3");
+                  genre.classList.add("textGenres");
                   GENRES.push(generos.name);
                   genre.innerHTML = `
                     ${GENRES[0]}
@@ -410,25 +526,25 @@ $$(document).on('page:init', function (e) {
                   genreDiv.appendChild(genre);
                 });
               } else {
-                const genreDiv = document.getElementById('genreDiv');
-                const genre = document.createElement('span');
+                const genreDiv = document.getElementById("genreDiv");
+                const genre = document.createElement("span");
                 genre.innerHTML = `No existen generos`;
                 genreDiv.appendChild(genre);
               }
 
               if (credits.cast.length > 0) {
-                const creditsDiv = document.getElementById('creditsDiv');
+                const creditsDiv = document.getElementById("creditsDiv");
                 credits.cast.map((credit) => {
-                  const reparto = document.createElement('a');
-                  reparto.setAttribute('id', credit.id);
-                  reparto.classList.add('game-card');
-                  reparto.classList.add('scroll-block-item');
+                  const reparto = document.createElement("a");
+                  reparto.setAttribute("id", credit.id);
+                  reparto.classList.add("game-card");
+                  reparto.classList.add("scroll-block-item");
                   reparto.innerHTML = `
                 <div class="game-card-image popup-open" data-popup=".popup-about">
                    <img src="${
                      credit.profile_path
                        ? imgUrl + credit.profile_path
-                       : '../img/user.png'
+                       : "../img/user.png"
                    }"
                     alt="${credit.name}">
                       </div>
@@ -439,20 +555,20 @@ $$(document).on('page:init', function (e) {
                   creditsDiv.appendChild(reparto);
                 });
               } else {
-                const creditsDiv = document.getElementById('creditsDiv');
-                const reparto = document.createElement('span');
+                const creditsDiv = document.getElementById("creditsDiv");
+                const reparto = document.createElement("span");
                 reparto.innerHTML = `No existe reparto`;
                 creditsDiv.appendChild(reparto);
-                console.log('No existe reparto');
+                console.log("No existe reparto");
               }
 
               if (trailers.youtube.length > 0) {
-                const trailersDiv = document.getElementById('trailersDiv');
+                const trailersDiv = document.getElementById("trailersDiv");
                 trailers.youtube.map((cortos) => {
-                  const trailer = document.createElement('div');
-                  trailer.classList.add('game-card');
-                  trailer.classList.add('scroll-block-item');
-                  trailer.classList.add('trailerDiv');
+                  const trailer = document.createElement("div");
+                  trailer.classList.add("game-card");
+                  trailer.classList.add("scroll-block-item");
+                  trailer.classList.add("trailerDiv");
 
                   TRAILER.push(
                     `  <iframe src="https://www.youtube-nocookie.com/embed/${cortos.source}" title="${cortos.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
@@ -469,9 +585,9 @@ $$(document).on('page:init', function (e) {
               const { results } = data;
               const { AR } = results;
               if (AR.flatrate !== undefined) {
-                const watchDiv = document.getElementById('watchDiv');
+                const watchDiv = document.getElementById("watchDiv");
                 AR.flatrate.map((watches) => {
-                  const watch = document.createElement('div');
+                  const watch = document.createElement("div");
                   WATCHES.push(watches.logo_path);
                   WATCHES.push(watches.provider_name);
                   watch.innerHTML = `
@@ -484,8 +600,8 @@ $$(document).on('page:init', function (e) {
                   watchDiv.appendChild(watch);
                 });
               } else {
-                const watchDiv = document.getElementById('watchDiv');
-                const watch = document.createElement('span');
+                const watchDiv = document.getElementById("watchDiv");
+                const watch = document.createElement("span");
                 watch.innerHTML = `No existe donde verla`;
                 watchDiv.appendChild(watch);
               }
@@ -528,27 +644,27 @@ $$(document).on('page:init', function (e) {
     let TRAILER = [];
     let GENRES = [];
     let WATCHES = [];
-    cardPopup.innerHTML = '';
+    cardPopup.innerHTML = "";
     data.forEach((movie) => {
       const voteCount = movie.vote_average.toFixed(1);
 
-      const movieEl = document.createElement('a');
+      const movieEl = document.createElement("a");
 
-      movieEl.setAttribute('id', movie.id);
-      movieEl.classList.add('game-card');
-      movieEl.classList.add('scroll-block-item');
-      movieEl.addEventListener('click', function () {
-        imagePopup.innerHTML = '';
+      movieEl.setAttribute("id", movie.id);
+      movieEl.classList.add("game-card");
+      movieEl.classList.add("scroll-block-item");
+      movieEl.addEventListener("click", function () {
+        imagePopup.innerHTML = "";
         const idUrl =
           baseUrl +
-          '/tv/' +
+          "/tv/" +
           movie.id +
-          '?' +
+          "?" +
           apiKey +
-          '&language=es&append_to_response=credits';
+          "&language=es&append_to_response=credits";
         const viewUrl =
-          baseUrl + '/tv/' + movie.id + '/watch/' + 'providers' + '?' + apiKey;
-        const trailerUrl = baseUrl + '/tv/' + movie.id + '/videos?' + apiKey;
+          baseUrl + "/tv/" + movie.id + "/watch/" + "providers" + "?" + apiKey;
+        const trailerUrl = baseUrl + "/tv/" + movie.id + "/videos?" + apiKey;
         getIdUrl(idUrl, viewUrl, trailerUrl);
         async function getIdUrl(url, url2, url3) {
           await fetch(url)
@@ -568,11 +684,11 @@ $$(document).on('page:init', function (e) {
               function toHoursAndMinutes(runtime) {
                 const hours = Math.floor(runtime / 60);
                 const minutes = runtime % 60;
-                return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
+                return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
               }
-              const movieEl = document.createElement('div');
-              movieEl.classList.add('view');
-              movieEl.classList.add('view-init');
+              const movieEl = document.createElement("div");
+              movieEl.classList.add("view");
+              movieEl.classList.add("view-init");
               movieEl.innerHTML = `
               <div class="page">
                 <div class="page-content">
@@ -609,10 +725,10 @@ $$(document).on('page:init', function (e) {
               </div>
               `;
               imagePopup.appendChild(movieEl);
-              const genreDiv = document.getElementById('genreDiv');
+              const genreDiv = document.getElementById("genreDiv");
               genres.map((generos) => {
-                const genre = document.createElement('h3');
-                genre.classList.add('textGenres');
+                const genre = document.createElement("h3");
+                genre.classList.add("textGenres");
                 GENRES.push(generos.name);
                 genre.innerHTML = `
                   ${GENRES[0]}
@@ -620,18 +736,18 @@ $$(document).on('page:init', function (e) {
                 GENRES = [];
                 genreDiv.appendChild(genre);
               });
-              const creditsDiv = document.getElementById('creditsDiv');
+              const creditsDiv = document.getElementById("creditsDiv");
               credits.cast.map((credit) => {
-                const reparto = document.createElement('a');
-                reparto.setAttribute('id', credit.id);
-                reparto.classList.add('game-card');
-                reparto.classList.add('scroll-block-item');
+                const reparto = document.createElement("a");
+                reparto.setAttribute("id", credit.id);
+                reparto.classList.add("game-card");
+                reparto.classList.add("scroll-block-item");
                 reparto.innerHTML = `
                 <div class="game-card-image popup-open" data-popup=".popup-about">
                    <img src="${
                      credit.profile_path
                        ? imgUrl + credit.profile_path
-                       : '../img/user.png'
+                       : "../img/user.png"
                    }"
                     alt="${credit.name}">
                       </div>
@@ -647,9 +763,9 @@ $$(document).on('page:init', function (e) {
             .then((data) => {
               const { results } = data;
               const { AR } = results;
-              const watchDiv = document.getElementById('watchDiv');
+              const watchDiv = document.getElementById("watchDiv");
               AR.flatrate.map((watches) => {
-                const watch = document.createElement('div');
+                const watch = document.createElement("div");
                 WATCHES.push(watches.logo_path);
                 WATCHES.push(watches.provider_name);
                 watch.innerHTML = `
@@ -668,13 +784,13 @@ $$(document).on('page:init', function (e) {
             .then(async (data) => {
               const { results } = data;
               results.map((trailer) => {
-                if (trailer.type === 'Trailer') {
+                if (trailer.type === "Trailer") {
                   if (trailer.type.length > 0) {
-                    const trailersDiv = document.getElementById('trailersDiv');
-                    const video = document.createElement('div');
-                    video.classList.add('game-card');
-                    video.classList.add('scroll-block-item');
-                    video.classList.add('trailerDiv');
+                    const trailersDiv = document.getElementById("trailersDiv");
+                    const video = document.createElement("div");
+                    video.classList.add("game-card");
+                    video.classList.add("scroll-block-item");
+                    video.classList.add("trailerDiv");
 
                     TRAILER.push(
                       `  <iframe src="https://www.youtube-nocookie.com/embed/${trailer.key}" title="${trailer.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
@@ -706,20 +822,20 @@ $$(document).on('page:init', function (e) {
     });
   };
 
-  prev.addEventListener('click', () => {
+  prev.addEventListener("click", () => {
     if (page > 1) {
       page--;
       spanPag.innerHTML = page;
       if (selectedGenre.length >= 1) {
         getMoviesCount(
           apiUrlCount +
-            '&with_genres=' +
-            encodeURI(selectedGenre.join(',') + `&page=${page}`)
+            "&with_genres=" +
+            encodeURI(selectedGenre.join(",") + `&page=${page}`)
         );
       } else {
         getMoviesCount(
           baseUrl +
-            '/discover/movie?' +
+            "/discover/movie?" +
             apiKey +
             `&page=${page}&sort_by=vote_count.desc&`
         );
@@ -727,20 +843,20 @@ $$(document).on('page:init', function (e) {
     }
   });
 
-  next.addEventListener('click', () => {
+  next.addEventListener("click", () => {
     if (page < 50) {
       page++;
       spanPag.innerHTML = page;
       if (selectedGenre.length >= 1) {
         getMoviesCount(
           apiUrlCount +
-            '&with_genres=' +
-            encodeURI(selectedGenre.join(',') + `&page=${page}`)
+            "&with_genres=" +
+            encodeURI(selectedGenre.join(",") + `&page=${page}`)
         );
       } else {
         getMoviesCount(
           baseUrl +
-            '/discover/movie?' +
+            "/discover/movie?" +
             apiKey +
             `&page=${page}&sort_by=vote_count.desc&`
         );
@@ -749,27 +865,27 @@ $$(document).on('page:init', function (e) {
   });
 });
 
-$$(document).on('page:init', '.page[data-name="config"]', function (e) {
-  console.log('otra pagina');
+$$(document).on("page:init", '.page[data-name="config"]', function (e) {
+  console.log("otra pagina");
 });
-$$(document).on('page:init', '.page[data-name="about"]', function (e) {
-  console.log('otra pagina');
+$$(document).on("page:init", '.page[data-name="about"]', function (e) {
+  console.log("otra pagina");
 });
 
 const searchFilm = () => {
-  if (film.value !== '') {
-    searchGenrer.innerHTML = '';
-    divFilm.innerHTML = '';
+  if (film.value !== "") {
+    searchGenrer.innerHTML = "";
+    divFilm.innerHTML = "";
     const url =
-      baseUrl + '/search/multi?' + apiKey + `&page=1&query=${film.value}`;
+      baseUrl + "/search/multi?" + apiKey + `&page=1&query=${film.value}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         const { results } = data;
 
         if (results.length == 0) {
-          divFilm.innerHTML = '';
-          const searchResults = document.createElement('a');
+          divFilm.innerHTML = "";
+          const searchResults = document.createElement("a");
           searchResults.innerHTML = `
           <div>
           <p>No hay películas que coincidan con tu consulta. Por favor, sea mas detallado o vuelva al <a onclick='window.location.reload()'>inicio</a>.</p>
@@ -778,57 +894,57 @@ const searchFilm = () => {
           divFilm.appendChild(searchResults);
         } else {
           results.map((search) => {
-            const searchResults = document.createElement('a');
-            searchResults.setAttribute('id', search.id);
-            searchResults.classList.add('game-card');
-            searchResults.classList.add('scroll-block-item');
+            const searchResults = document.createElement("a");
+            searchResults.setAttribute("id", search.id);
+            searchResults.classList.add("game-card");
+            searchResults.classList.add("scroll-block-item");
 
-            divFilm.classList.add('block');
-            divFilm.classList.add('game-cards');
-            divFilm.classList.add('scroll-block');
+            divFilm.classList.add("block");
+            divFilm.classList.add("game-cards");
+            divFilm.classList.add("scroll-block");
 
-            searchResults.addEventListener('click', function () {
+            searchResults.addEventListener("click", function () {
               let TRAILER = [];
               let GENRES = [];
               let WATCHES = [];
-              imagePopup.innerHTML = '';
-              if (search.media_type === 'movie') {
+              imagePopup.innerHTML = "";
+              if (search.media_type === "movie") {
                 const idUrl =
                   baseUrl +
-                  '/movie/' +
+                  "/movie/" +
                   search.id +
-                  '?' +
+                  "?" +
                   apiKey +
-                  '&language=es&append_to_response=credits';
+                  "&language=es&append_to_response=credits";
                 const viewUrl =
                   baseUrl +
-                  '/movie/' +
+                  "/movie/" +
                   search.id +
-                  '/watch/' +
-                  'providers' +
-                  '?' +
+                  "/watch/" +
+                  "providers" +
+                  "?" +
                   apiKey;
                 const trailerUrl =
-                  baseUrl + '/movie/' + search.id + '/videos?' + apiKey;
+                  baseUrl + "/movie/" + search.id + "/videos?" + apiKey;
                 getIdUrl(idUrl, viewUrl, trailerUrl);
               } else {
                 const idUrl =
                   baseUrl +
-                  '/tv/' +
+                  "/tv/" +
                   search.id +
-                  '?' +
+                  "?" +
                   apiKey +
-                  '&language=es&append_to_response=credits';
+                  "&language=es&append_to_response=credits";
                 const viewUrl =
                   baseUrl +
-                  '/tv/' +
+                  "/tv/" +
                   search.id +
-                  '/watch/' +
-                  'providers' +
-                  '?' +
+                  "/watch/" +
+                  "providers" +
+                  "?" +
                   apiKey;
                 const trailerUrl =
-                  baseUrl + '/tv/' + search.id + '/videos?' + apiKey;
+                  baseUrl + "/tv/" + search.id + "/videos?" + apiKey;
                 getIdUrl(idUrl, viewUrl, trailerUrl);
               }
 
@@ -837,11 +953,11 @@ const searchFilm = () => {
                   .then((res) => res.json())
                   .then(async (data) => {
                     console.log(data);
-                    const movieEl = document.createElement('div');
-                    movieEl.classList.add('view');
-                    movieEl.classList.add('view-init');
+                    const movieEl = document.createElement("div");
+                    movieEl.classList.add("view");
+                    movieEl.classList.add("view-init");
 
-                    if (search.media_type === 'movie') {
+                    if (search.media_type === "movie") {
                       movieEl.innerHTML = `
                     <div class="page">
                       <div class="page-content">
@@ -913,10 +1029,10 @@ const searchFilm = () => {
                     imagePopup.appendChild(movieEl);
 
                     if (data.genres.length > 0) {
-                      const genreDiv = document.getElementById('genreDiv');
+                      const genreDiv = document.getElementById("genreDiv");
                       data.genres.map((generos) => {
-                        const genre = document.createElement('h3');
-                        genre.classList.add('textGenres');
+                        const genre = document.createElement("h3");
+                        genre.classList.add("textGenres");
                         GENRES.push(generos.name);
                         genre.innerHTML = `
                         ${GENRES[0]}
@@ -925,25 +1041,25 @@ const searchFilm = () => {
                         genreDiv.appendChild(genre);
                       });
                     } else {
-                      const genreDiv = document.getElementById('genreDiv');
-                      const genre = document.createElement('span');
+                      const genreDiv = document.getElementById("genreDiv");
+                      const genre = document.createElement("span");
                       genre.innerHTML = `No existen generos`;
                       genreDiv.appendChild(genre);
                     }
 
                     if (data.credits.cast.length > 0) {
-                      const creditsDiv = document.getElementById('creditsDiv');
+                      const creditsDiv = document.getElementById("creditsDiv");
                       data.credits.cast.map((credit) => {
-                        const reparto = document.createElement('a');
-                        reparto.setAttribute('id', credit.id);
-                        reparto.classList.add('game-card');
-                        reparto.classList.add('scroll-block-item');
+                        const reparto = document.createElement("a");
+                        reparto.setAttribute("id", credit.id);
+                        reparto.classList.add("game-card");
+                        reparto.classList.add("scroll-block-item");
                         reparto.innerHTML = `
                     <div class="game-card-image popup-open" data-popup=".popup-about">
                        <img src="${
                          credit.profile_path
                            ? imgUrl + credit.profile_path
-                           : '../img/user.png'
+                           : "../img/user.png"
                        }"
                         alt="${credit.name}">
                           </div>
@@ -952,7 +1068,7 @@ const searchFilm = () => {
                       `;
                         if (
                           imgUrl + credit.profile_path ===
-                          'https://image.tmdb.org/t/p/w500null'
+                          "https://image.tmdb.org/t/p/w500null"
                         ) {
                           reparto.innerHTML = `
                       <div class="game-card-image popup-open" data-popup=".popup-about">
@@ -966,11 +1082,11 @@ const searchFilm = () => {
                         creditsDiv.appendChild(reparto);
                       });
                     } else {
-                      const creditsDiv = document.getElementById('creditsDiv');
-                      const reparto = document.createElement('span');
+                      const creditsDiv = document.getElementById("creditsDiv");
+                      const reparto = document.createElement("span");
                       reparto.innerHTML = `No existe reparto`;
                       creditsDiv.appendChild(reparto);
-                      console.log('No existe reparto');
+                      console.log("No existe reparto");
                     }
                   });
 
@@ -980,9 +1096,9 @@ const searchFilm = () => {
                     const { results } = data;
                     const { AR } = results;
                     if (AR.flatrate !== undefined) {
-                      const watchDiv = document.getElementById('watchDiv');
+                      const watchDiv = document.getElementById("watchDiv");
                       AR.flatrate.map((watches) => {
-                        const watch = document.createElement('div');
+                        const watch = document.createElement("div");
                         WATCHES.push(watches.logo_path);
                         WATCHES.push(watches.provider_name);
                         watch.innerHTML = `
@@ -995,8 +1111,8 @@ const searchFilm = () => {
                         watchDiv.appendChild(watch);
                       });
                     } else {
-                      const watchDiv = document.getElementById('watchDiv');
-                      const watch = document.createElement('span');
+                      const watchDiv = document.getElementById("watchDiv");
+                      const watch = document.createElement("span");
                       watch.innerHTML = `No existe donde verla`;
                       watchDiv.appendChild(watch);
                     }
@@ -1007,14 +1123,14 @@ const searchFilm = () => {
                   .then(async (data) => {
                     const { results } = data;
                     results.map((trailer) => {
-                      if (trailer.type === 'Trailer') {
+                      if (trailer.type === "Trailer") {
                         if (trailer.type.length > 0) {
                           const trailersDiv =
-                            document.getElementById('trailersDiv');
-                          const video = document.createElement('div');
-                          video.classList.add('game-card');
-                          video.classList.add('scroll-block-item');
-                          video.classList.add('trailerDiv');
+                            document.getElementById("trailersDiv");
+                          const video = document.createElement("div");
+                          video.classList.add("game-card");
+                          video.classList.add("scroll-block-item");
+                          video.classList.add("trailerDiv");
 
                           TRAILER.push(
                             `  <iframe src="https://www.youtube-nocookie.com/embed/${trailer.key}" title="${trailer.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
@@ -1029,14 +1145,14 @@ const searchFilm = () => {
               }
             });
 
-            if (search.media_type === 'movie') {
+            if (search.media_type === "movie") {
               searchResults.innerHTML = `
             <div class="game-card-image popup-open" data-popup=".popup-about">
                 <img src="
                 ${
                   search.poster_path
                     ? imgUrl + search.poster_path
-                    : '../img/film.png'
+                    : "../img/film.png"
                 }"
                     alt="${search.title}">
             </div>
@@ -1050,7 +1166,7 @@ const searchFilm = () => {
                     ${
                       search.poster_path
                         ? imgUrl + search.poster_path
-                        : '../img/film.png'
+                        : "../img/film.png"
                     }"
                         alt="${search.name}">
                 </div>
@@ -1066,8 +1182,8 @@ const searchFilm = () => {
         }
       });
   } else {
-    divFilm.innerHTML = '';
-    const searchResults = document.createElement('div');
+    divFilm.innerHTML = "";
+    const searchResults = document.createElement("div");
     searchResults.innerHTML = `
 
     <p>No hay películas que coincidan con tu consulta. Por favor, sea mas detallado o vuelva al <a onclick='window.location.reload()'>inicio</a>.</p>

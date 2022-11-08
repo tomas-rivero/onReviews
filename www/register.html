@@ -1,0 +1,35 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
+<div class="page" data-name="register">
+  <div class="page-content">
+    <form class="signupForm" onsubmit="load(event)">
+      <!-- CONTENIDO DEMO -->
+
+      <h1>Crear Cuenta</h1>
+
+      <input type="text" id="nombreRegistro" placeholder="Email" required />
+      <input
+        type="password"
+        id="passwordRegistro"
+        placeholder="Contraseña"
+        required
+      />
+      <input
+        type="password"
+        id="passwordRegistro2"
+        placeholder="Confirmar Contraseña"
+        required
+      />
+      <input
+        type="submit"
+        value="Register"
+        id="register"
+        class="button button-large button-fill button-preloader ${isLoading ? 'button-loading' : ''}"
+      />
+      <a href="/index/">Ya tienes una cuenta? Inicia Sesion</a>
+
+      <!-- FIN DE DEMO -->
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/my-app.js"></script>
