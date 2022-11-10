@@ -50,7 +50,7 @@
 .bb8:before {
   height: 6px;
   width: 6px;
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   z-index: 1;
@@ -103,7 +103,7 @@
 .bb8:after {
   height: 6px;
   width: 6px;
-  content: '';
+  content: "";
   display: block;
   background-color: transparent;
   box-shadow: 112px 132px #ffffff, 118px 132px #ffffff, 124px 132px #ffffff,
@@ -429,7 +429,7 @@ li {
   }
   0% {
     opacity: 0;
-    content: '';
+    content: "";
   }
 }
 
@@ -455,7 +455,7 @@ li {
 }
 .login-screen-content {
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('../img/bgLogin.jpg') !important;
+    url("../img/bgLogin.jpg") !important;
   background-position: center;
   background-repeat: none;
 }

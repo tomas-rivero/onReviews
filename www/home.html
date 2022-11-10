@@ -1,10 +1,7 @@
 <div class="page" data-name="home">
-
   <div class="navbar navbar-large navbar-transparent">
     <div class="navbar-inner sliding">
-
       <div class="title">OnReviews</div>
-
     </div>
   </div>
 
@@ -38,10 +35,15 @@
 
         <div>
           <div class="block divGradient">
-            <h1>Hola Tomas!</h1>
+            <h1>Hola <span id="currentUserInit"></span>!</h1>
             <p>Que queres ver hoy?</p>
             <form class="searchDiv" id="searchFilm">
-              <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula" autocomplete="off" />
+              <input
+                id="searchInput"
+                class="searchInput"
+                placeholder="Buscar una pelicula"
+                autocomplete="off"
+              />
               <button type="submit" class="buttonSearch" value="">
                 <i class="iconSearch f7-icons">search</i>
               </button>
@@ -58,16 +60,21 @@
               <div id="cardCount" class="block game-cards scroll-block"></div>
               <footer>
                 <ul class="paginationDiv">
-                  <button id="btnPrev" class="color-white col button button-raised button-round">
+                  <button
+                    id="btnPrev"
+                    class="color-white col button button-raised button-round"
+                  >
                     <i class="iconSearch f7-icons">arrowtriangle_left</i>
                   </button>
                   <h3 id="spanPag">1</h3>
-                  <button id="btnNext" class="color-white col button button-raised button-round">
+                  <button
+                    id="btnNext"
+                    class="color-white col button button-raised button-round"
+                  >
                     <i class="iconSearch f7-icons">arrowtriangle_right</i>
                   </button>
                 </ul>
               </footer>
-
             </div>
           </div>
         </div>
@@ -146,8 +153,8 @@
         <div class="block">
           <div class="imgProfileDiv">
             <img src="./img/10.png" alt="" class="imgProfile" />
-            <h3>Tomas Rivero</h3>
-            <p>trivero886@gmail.com</p>
+            <h3 id="currentUserProfile"></h3>
+            <p id="emailUser"></p>
           </div>
           <div class="userOptionsDiv">
             <ul>
@@ -168,7 +175,7 @@
               </li>
               <hr />
               <li>
-                <a href="/#/">Cerrar sesion</a>
+                <a onclick="signOut()">Cerrar sesion</a>
               </li>
               <hr />
               <li>
