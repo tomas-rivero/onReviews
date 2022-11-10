@@ -1,7 +1,10 @@
 <div class="page" data-name="home">
-  <div class="navbar">
+
+  <div class="navbar navbar-large navbar-transparent">
     <div class="navbar-inner sliding">
+
       <div class="title">OnReviews</div>
+
     </div>
   </div>
 
@@ -22,7 +25,7 @@
     </div>
   </div>
 
-  <div id="pageContent" class="page-content hide-navbar-on-scroll">
+  <div id="pageContent" class="page-content">
     <div class="tabs">
       <div class="tab tab-active" id="tab-1">
         <div class="swiperContainer">
@@ -37,21 +40,9 @@
           <div class="block divGradient">
             <h1>Hola Tomas!</h1>
             <p>Que queres ver hoy?</p>
-            <form
-              class="searchDiv"
-              onsubmit="searchFilm(event.preventDefault())"
-            >
-              <input
-                id="searchInput"
-                class="searchInput"
-                placeholder="Buscar una pelicula"
-                autocomplete="off"
-              />
-              <button
-                onclick="searchFilm(event.preventDefault())"
-                class="buttonSearch"
-                value=""
-              >
+            <form class="searchDiv" id="searchFilm">
+              <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula" autocomplete="off" />
+              <button type="submit" class="buttonSearch" value="">
                 <i class="iconSearch f7-icons">search</i>
               </button>
             </form>
@@ -61,33 +52,30 @@
           </div>
           <div class="block">
             <div id="divFilm">
-              <div class="page-title">Los mas destacado.</div>
+              <div class="page-title">On Demand TV</div>
+              <div id="cardPopu" class="block game-cards scroll-block"></div>
+              <div class="page-title">Los mas destacados.</div>
               <div id="cardCount" class="block game-cards scroll-block"></div>
               <footer>
                 <ul class="paginationDiv">
-                  <button
-                    id="btnPrev"
-                    class="color-white col button button-raised button-round"
-                  >
+                  <button id="btnPrev" class="color-white col button button-raised button-round">
                     <i class="iconSearch f7-icons">arrowtriangle_left</i>
                   </button>
                   <h3 id="spanPag">1</h3>
-                  <button
-                    id="btnNext"
-                    class="color-white col button button-raised button-round"
-                  >
+                  <button id="btnNext" class="color-white col button button-raised button-round">
                     <i class="iconSearch f7-icons">arrowtriangle_right</i>
                   </button>
                 </ul>
               </footer>
-              <div class="page-title">On Demand TV</div>
-              <div id="cardPopu" class="block game-cards scroll-block"></div>
+
             </div>
           </div>
         </div>
       </div>
       <div class="tab" id="tab-2">
-        <div class="block"></div>
+        <div class="block">
+          <div class="page-title">Post Reviews</div>
+        </div>
       </div>
       <div class="tab" id="tab-3">
         <div class="block">
