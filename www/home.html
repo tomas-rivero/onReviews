@@ -1,4 +1,4 @@
-<div class="page" data-name="home">
+<div class="page navbarHome" data-name="home">
   <div class="navbar navbar-large navbar-transparent">
     <div class="navbar-inner sliding">
       <div class="title">OnReviews</div>
@@ -38,12 +38,7 @@
             <h1>Hola <span id="currentUserInit"></span>!</h1>
             <p>Que queres ver hoy?</p>
             <form class="searchDiv" id="searchFilm">
-              <input
-                id="searchInput"
-                class="searchInput"
-                placeholder="Buscar una pelicula"
-                autocomplete="off"
-              />
+              <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula" autocomplete="off" />
               <button type="submit" class="buttonSearch" value="">
                 <i class="iconSearch f7-icons">search</i>
               </button>
@@ -60,17 +55,11 @@
               <div id="cardCount" class="block game-cards scroll-block"></div>
               <footer>
                 <ul class="paginationDiv">
-                  <button
-                    id="btnPrev"
-                    class="color-white col button button-raised button-round"
-                  >
+                  <button id="btnPrev" class="color-white col button button-raised button-round">
                     <i class="iconSearch f7-icons">arrowtriangle_left</i>
                   </button>
                   <h3 id="spanPag">1</h3>
-                  <button
-                    id="btnNext"
-                    class="color-white col button button-raised button-round"
-                  >
+                  <button id="btnNext" class="color-white col button button-raised button-round">
                     <i class="iconSearch f7-icons">arrowtriangle_right</i>
                   </button>
                 </ul>
@@ -152,7 +141,9 @@
       <div class="tab" id="tab-4">
         <div class="block">
           <div class="imgProfileDiv">
-            <img src="./img/10.png" alt="" class="imgProfile" />
+            <div class="borderProfile">
+              <img id="imgProfile" class="imgProfile" />
+            </div>
             <h3 id="currentUserProfile"></h3>
             <p id="emailUser"></p>
           </div>
@@ -183,6 +174,41 @@
               </li>
             </ul>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup popup-selectImg">
+      <div class="block">
+        <div class="marginCard">
+          <a class="popup-close" href="#">
+            <i class="iconX f7-icons">multiply</i>
+          </a>
+        </div>
+        <h1>Elegi el icono que mas te gusta!</h1>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('1')" src="./img/imgProfiles/1.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('2')" src="./img/imgProfiles/2.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('3')" src="./img/imgProfiles/3.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('4')" src="./img/imgProfiles/4.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('5')" src="./img/imgProfiles/5.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('6')" src="./img/imgProfiles/6.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('7')" src="./img/imgProfiles/7.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('8')" src="./img/imgProfiles/8.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('9')" src="./img/imgProfiles/9.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('10')" src="./img/imgProfiles/10.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('11')" src="./img/imgProfiles/11.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('12')" src="./img/imgProfiles/12.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('13')" src="./img/imgProfiles/13.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('14')" src="./img/imgProfiles/14.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('15')" src="./img/imgProfiles/15.png" alt=""></div>
         </div>
       </div>
     </div>

@@ -167,7 +167,7 @@
   text-align: center;
 }
 .md:not([class*='color-theme']) {
-  --f7-theme-color: #6200ee;
+  --f7-theme-color: #313e79;
   --f7-theme-color-rgb: 98, 0, 238;
   --f7-theme-color-shade: #5100c5;
   --f7-theme-color-tint: #7718ff;
@@ -314,7 +314,7 @@ div.demo-lazy {
   height: 40vw;
   background-size: cover;
   background-position: center;
-  color: #fff;
+  /* color: #fff; */
 }
 .demo-card-header-pic .card-content-padding .date {
   color: #8e8e93;
