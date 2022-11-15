@@ -1,0 +1,217 @@
+<div class="page navbarHome" data-name="home">
+  <div class="navbar navbar-large navbar-transparent">
+    <div class="navbar-inner sliding">
+      <div class="title">OnReviews</div>
+    </div>
+  </div>
+
+  <div class="toolbar tabbar-labels toolbar-bottom">
+    <div class="toolbar-inner">
+      <a href="#tab-1" class="tab-link tab-link-active">
+        <i class="icon f7-icons">house_fill</i>
+      </a>
+      <a href="#tab-2" class="tab-link" onclick="maps()">
+        <i class="icon f7-icons">layers_alt_fill</i>
+      </a>
+      <a href="#tab-3" class="tab-link">
+        <i class="icon f7-icons">star_fill</i>
+      </a>
+      <a href="#tab-4" class="tab-link">
+        <i class="icon f7-icons">person_fill</i>
+      </a>
+    </div>
+  </div>
+
+  <div id="pageContent" class="page-content">
+    <div class="tabs">
+      <div class="tab tab-active" id="tab-1">
+        <div class="swiperContainer">
+          <div class="swiper swiper-init demo-swiper">
+            <div class="swiper-wrapper" id="swiperWrapper"></div>
+          </div>
+        </div>
+
+        <div id="imagePopup" class="popup popup-about"></div>
+
+        <div>
+          <div class="block divGradient">
+            <h1>Hola <span id="currentUserInit"></span>!</h1>
+            <p>Que queres ver hoy?</p>
+            <form class="searchDiv" id="searchFilm">
+              <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula" autocomplete="off" />
+              <button type="submit" class="buttonSearch" value="">
+                <i class="iconSearch f7-icons">search</i>
+              </button>
+            </form>
+
+            <div id="searchGenrer"></div>
+            <div id="clearBtn"></div>
+          </div>
+          <div class="block">
+            <div id="divFilm">
+              <div class="page-title">On Demand TV</div>
+              <div id="cardPopu" class="block game-cards scroll-block"></div>
+              <div class="page-title">Los mas destacados.</div>
+              <div id="cardCount" class="block game-cards scroll-block"></div>
+              <footer>
+                <ul class="paginationDiv">
+                  <button id="btnPrev" class="color-white col button button-raised button-round">
+                    <i class="iconSearch f7-icons">arrowtriangle_left</i>
+                  </button>
+                  <h3 id="spanPag">1</h3>
+                  <button id="btnNext" class="color-white col button button-raised button-round">
+                    <i class="iconSearch f7-icons">arrowtriangle_right</i>
+                  </button>
+                </ul>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab" id="tab-2">
+        <div class="block">
+          <div class="page-title">Cines cercanos</div>
+          <div style="width: 100%; height: 80vh; border:2px solid #000;" id="mapContainer"></div>
+        </div>
+      </div>
+      <div class="tab" id="tab-3">
+        <div class="block">
+          <h1>Contenido de tercera pagina</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque
+            quos asperiores ut, odio numquam ab, qui, alias adipisci in magni
+            reiciendis reprehenderit. Labore esse quae ut tempore consequatur,
+            reprehenderit similique!
+          </p>
+          <p>
+            Quis omnis, quam maiores voluptates vero atque porro? Soluta modi
+            dolore eum dolor iste eos perspiciatis vero porro aliquam officia
+            deleniti, cumque rem, consequatur, ea ipsa temporibus dicta
+            architecto saepe.
+          </p>
+          <p>
+            Tempora eius, sit distinctio architecto repellat, rerum quae, eum
+            suscipit aperiam libero beatae ut eveniet ex labore illo! Labore
+            illo harum voluptatum nulla ullam natus beatae iste tempora ut
+            fugiat!
+          </p>
+          <p>
+            Veritatis vero quis ipsum explicabo beatae consequatur, deleniti,
+            tenetur assumenda sit quisquam soluta, possimus magnam nostrum animi
+            hic sapiente sed laudantium similique quas labore, voluptatem eius
+            aliquam. Sunt, ad aliquam!
+          </p>
+          <p>
+            Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt
+            esse delectus fugit impedit qui consequatur reiciendis quam. Totam
+            tenetur, mollitia. Porro optio similique perspiciatis aliquam ipsam
+            vel reprehenderit!
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque
+            quos asperiores ut, odio numquam ab, qui, alias adipisci in magni
+            reiciendis reprehenderit. Labore esse quae ut tempore consequatur,
+            reprehenderit similique!
+          </p>
+          <p>
+            Quis omnis, quam maiores voluptates vero atque porro? Soluta modi
+            dolore eum dolor iste eos perspiciatis vero porro aliquam officia
+            deleniti, cumque rem, consequatur, ea ipsa temporibus dicta
+            architecto saepe.
+          </p>
+          <p>
+            Tempora eius, sit distinctio architecto repellat, rerum quae, eum
+            suscipit aperiam libero beatae ut eveniet ex labore illo! Labore
+            illo harum voluptatum nulla ullam natus beatae iste tempora ut
+            fugiat!
+          </p>
+          <p>
+            Veritatis vero quis ipsum explicabo beatae consequatur, deleniti,
+            tenetur assumenda sit quisquam soluta, possimus magnam nostrum animi
+            hic sapiente sed laudantium similique quas labore, voluptatem eius
+            aliquam. Sunt, ad aliquam!
+          </p>
+          <p>
+            Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt
+            esse delectus fugit impedit qui consequatur reiciendis quam. Totam
+            tenetur, mollitia. Porro optio similique perspiciatis aliquam ipsam
+            vel reprehenderit!
+          </p>
+        </div>
+      </div>
+      <div class="tab" id="tab-4">
+        <div class="block">
+          <div class="imgProfileDiv">
+            <div class="borderProfile">
+              <img id="imgProfile" class="imgProfile" />
+            </div>
+            <h3 id="currentUserProfile"></h3>
+            <p id="emailUser"></p>
+          </div>
+          <div class="userOptionsDiv">
+            <ul>
+              <li>
+                <a href="/config/">Ajustes de la aplicacion</a>
+              </li>
+              <hr />
+              <li>
+                <a href="/#/">Cuenta</a>
+              </li>
+              <hr />
+              <li>
+                <a href="/about/">Sobre los creadores</a>
+              </li>
+              <hr />
+              <li>
+                <a href="/#/">Ayuda</a>
+              </li>
+              <hr />
+              <li>
+                <a onclick="signOut()">Cerrar sesion</a>
+              </li>
+              <hr />
+              <li>
+                <p>Version 0.0.1</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup popup-selectImg">
+      <div class="block">
+        <div class="marginCard">
+          <a class="popup-close" href="#">
+            <i class="iconX f7-icons">multiply</i>
+          </a>
+        </div>
+        <h1>Elegi el icono que mas te gusta!</h1>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('1')" src="./img/imgProfiles/1.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('2')" src="./img/imgProfiles/2.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('3')" src="./img/imgProfiles/3.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('4')" src="./img/imgProfiles/4.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('5')" src="./img/imgProfiles/5.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('6')" src="./img/imgProfiles/6.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('7')" src="./img/imgProfiles/7.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('8')" src="./img/imgProfiles/8.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('9')" src="./img/imgProfiles/9.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('10')" src="./img/imgProfiles/10.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('11')" src="./img/imgProfiles/11.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('12')" src="./img/imgProfiles/12.png" alt=""></div>
+        </div>
+        <div class="row">
+          <div class="col"><img onclick="setImgProfile('13')" src="./img/imgProfiles/13.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('14')" src="./img/imgProfiles/14.png" alt=""></div>
+          <div class="col"><img onclick="setImgProfile('15')" src="./img/imgProfiles/15.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

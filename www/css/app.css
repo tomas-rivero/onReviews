@@ -167,7 +167,7 @@
   text-align: center;
 }
 .md:not([class*='color-theme']) {
-  --f7-theme-color: #6200ee;
+  --f7-theme-color: #313e79;
   --f7-theme-color-rgb: 98, 0, 238;
   --f7-theme-color-shade: #5100c5;
   --f7-theme-color-tint: #7718ff;
@@ -314,7 +314,7 @@ div.demo-lazy {
   height: 40vw;
   background-size: cover;
   background-position: center;
-  color: #fff;
+  /* color: #fff; */
 }
 .demo-card-header-pic .card-content-padding .date {
   color: #8e8e93;
@@ -393,7 +393,7 @@ div.demo-lazy {
 /* Swipers Demo */
 .demo-swiper {
   width: 100%;
-  height: 100%
+  height: 100%;
 }
 .demo-swiper .swiper-slide,
 .demo-swiper-multiple .swiper-slide {
@@ -411,7 +411,6 @@ div.demo-lazy {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  background: #fff;
   color: #000;
 }
 .demo-swiper-multiple .swiper-slide {
@@ -693,7 +692,6 @@ code {
     flex-shrink: 10;
     min-width: 0;
   }
-
 }
 @media (min-width: 768px) and (max-width: 1023px) {
   .demo-expandable-cards .card {
@@ -706,7 +704,6 @@ code {
   .demo-expandable-cards .card:nth-child(n + 3) {
     margin-top: 0;
   }
- 
 }
 @media (min-width: 1024px) {
   .demo-expandable-cards .card {

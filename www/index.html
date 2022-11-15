@@ -1,221 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <!-- Required meta tags-->
-    <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- Color theme for statusbar (Android only) -->
-    <meta name="theme-color" content="#2196f3">
-    <!-- Your app title -->
-    <title>My App</title>
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Color theme for statusbar (Android only) -->
+  <meta name="theme-color" content="#2196f3">
+  <!-- Your app title -->
+  <title>My App</title>
 
-    <link rel="stylesheet" href="./css/styles.css">
-    <!-- Path to Framework7 Library Bundle CSS -->
-    <link rel="stylesheet" href="./lib/framework7/framework7-bundle.min.css">
-    <!-- Path to your custom app styles-->
-    <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <!-- Path to Framework7 Library Bundle CSS -->
+  <link rel="stylesheet" href="./lib/framework7/framework7-bundle.min.css">
+  <!-- Path to your custom app styles-->
+  <link rel="stylesheet" href="./css/app.css">
 
 <body>
-    <div id="overlay"></div>
+  <div id="overlay" class="overlay">
+    <div class="slide-in-left">
+      <div class="bb8"></div>
+    </div>
 
-    <div id="app">
+    <span class="quote">OnReviews</span>
 
-        <div id="imagePopup" class="popup popup-about">
+  </div>
 
-        </div>
-        <div class="view view-main">
-            <div class="page">
+  <div id="app">
+    <div class="view view-main">
+      <div class="page" data-name="index">
+        <div class="page-content login-screen-content">
+          <div class="block">
+            <form id="loginForm">
+              <div class="list">
+                <div class="login-screen-title">OnReviews</div>
+                <h3>Iniciar Sesion</h3>
 
-
-                <div class="toolbar tabbar-labels toolbar-bottom">
-
-                    <div class="toolbar-inner">
-
-                        <a href="#tab-1" class="tab-link tab-link-active">
-                            <i class="icon f7-icons">house_fill</i>
-                        </a>
-                        <a href="#tab-2" class="tab-link">
-                            <i class="icon f7-icons">layers_alt_fill</i>
-                        </a>
-                        <a href="#tab-3" class="tab-link">
-                            <i class="icon f7-icons">star_fill</i>
-                        </a>
-                        <a href="#tab-4" class="tab-link">
-                            <i class="icon f7-icons">person_fill</i>
-
-                        </a>
-
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Email</div>
+                      <div class="item-input-wrap">
+                        <input type="email" name="email" id="emailLogin" autocomplete="off" required />
+                      </div>
                     </div>
-
-                </div>
-
-
-
-
-
-                <div id="pageContent" class="page-content">
-
-                    <div class="tabs">
-                        <div class="tab tab-active" id="tab-1">
-                            <div class="block">
-                                <h1>Hola Tomas!</h1>
-                                <p>Que queres ver hoy?</p>
-                                <form class="searchDiv" onsubmit="searchFilm(event.preventDefault())">
-                                    <input id="searchInput" class="searchInput" placeholder="Buscar una pelicula"
-                                        autocomplete="off">
-                                    <button onclick="searchFilm(event.preventDefault())" class="buttonSearch" value="">
-                                        <i class="iconSearch f7-icons">search</i>
-                                    </button>
-                                </form>
-
-                                <div id="searchGenrer">
-
-                                </div>
-                                <div id="clearBtn">
-
-                                </div>
-
-                                <div id="divFilm">
-                                    <div class="page-title">Los mas destacado.</div>
-                                    <div id="cardCount" class="block game-cards scroll-block">
-
-                                    </div>
-                                    <footer>
-                                        <ul class="paginationDiv">
-                                            <button id="btnPrev"
-                                                class="color-white col button button-outline button-raised button-round">
-                                                <i class="iconSearch f7-icons">arrowtriangle_left</i>
-                                            </button>
-                                            <h3 id="spanPag">1</h3>
-                                            <button id="btnNext"
-                                                class="color-white col button  button-outline button-raised button-round">
-                                                <i class="iconSearch f7-icons">arrowtriangle_right</i>
-                                            </button>
-                                        </ul>
-                                    </footer>
-                                    <div class="page-title">On Demand TV</div>
-                                    <div id="cardPopu" class="block game-cards scroll-block">
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="tab" id="tab-2">
-                            <div class="block">
-                                <div class="swiper swiper-init demo-swiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">Slide 1</div>
-                                        <div class="swiper-slide">Slide 2</div>
-                                        <div class="swiper-slide">Slide 3</div>
-                                        <div class="swiper-slide">Slide 4</div>
-                                        <div class="swiper-slide">Slide 5</div>
-                                        <div class="swiper-slide">Slide 6</div>
-                                        <div class="swiper-slide">Slide 7</div>
-                                        <div class="swiper-slide">Slide 8</div>
-                                        <div class="swiper-slide">Slide 9</div>
-                                        <div class="swiper-slide">Slide 10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab" id="tab-3">
-                            <div class="block">
-                                <h1>Contenido de tercera pagina</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
-                                    odio numquam ab, qui,
-                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
-                                    consequatur, reprehenderit
-                                    similique!</p>
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste eos perspiciatis
-                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
-                                    dicta architecto saepe.</p>
-                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
-                                    libero beatae ut eveniet
-                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
-                                    ut fugiat!</p>
-                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
-                                    sit quisquam soluta,
-                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
-                                    voluptatem eius aliquam.
-                                    Sunt, ad aliquam!</p>
-                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
-                                    fugit impedit qui
-                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
-                                    perspiciatis aliquam ipsam vel
-                                    reprehenderit!</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque quos asperiores ut,
-                                    odio numquam ab, qui,
-                                    alias adipisci in magni reiciendis reprehenderit. Labore esse quae ut tempore
-                                    consequatur, reprehenderit
-                                    similique!</p>
-                                <p>Quis omnis, quam maiores voluptates vero atque porro? Soluta modi dolore eum dolor
-                                    iste eos perspiciatis
-                                    vero porro aliquam officia deleniti, cumque rem, consequatur, ea ipsa temporibus
-                                    dicta architecto saepe.</p>
-                                <p>Tempora eius, sit distinctio architecto repellat, rerum quae, eum suscipit aperiam
-                                    libero beatae ut eveniet
-                                    ex labore illo! Labore illo harum voluptatum nulla ullam natus beatae iste tempora
-                                    ut fugiat!</p>
-                                <p>Veritatis vero quis ipsum explicabo beatae consequatur, deleniti, tenetur assumenda
-                                    sit quisquam soluta,
-                                    possimus magnam nostrum animi hic sapiente sed laudantium similique quas labore,
-                                    voluptatem eius aliquam.
-                                    Sunt, ad aliquam!</p>
-                                <p>Animi iste, optio mollitia, sint hic neque sed, quis labore deserunt esse delectus
-                                    fugit impedit qui
-                                    consequatur reiciendis quam. Totam tenetur, mollitia. Porro optio similique
-                                    perspiciatis aliquam ipsam vel
-                                    reprehenderit!</p>
-                            </div>
-                        </div>
-                        <div class="tab" id="tab-4">
-                            <div class="block">
-                                <div class="imgProfileDiv">
-                                    <img src="./img/profile3.png" alt="" class="imgProfile">
-                                    <p>Tomas Rivero</p>
-                                </div>
-                                <div class="userOptionsDiv">
-                                    <ul>
-                                        <li>
-                                            <a href="/config/">Ajustes de la aplicacion</a>
-                                        </li>
-                                        <li>
-                                            <button>Cuenta</button>
-                                        </li>
-                                        <li>
-                                            <button>Sobre los creadores</button>
-                                        </li>
-                                        <li>
-                                            <button>Ayuda</button>
-                                        </li>
-                                        <li>
-                                            <button>Cerrar sesion</button>
-                                        </li>
-                                        <li>
-                                            <p>Version 0.0.1</p>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Contraseña</div>
+                      <div class="item-input-wrap">
+                        <input type="password" name="password" id="passwordLogin" autocomplete="off" required />
+                      </div>
                     </div>
-                </div>
+                  </li>
 
+                  <div id="textError"></div>
+
+                  </li>
+                </ul>
+              </div>
+
+              <div class="list">
+
+                <button type="submit" class="button button-fill">Iniciar sesion</button>
+
+                <div class="block-footer">
+                  <hr>
+                  <p>
+                    <a href="/register/" id="registerButton">¿No tenes cuenta? Create una!</a>
+                  </p>
+                  <p>
+                    <a id="forgotPassword" href="/forgot/">¿Olvidaste la contraseña?</a>
+                  </p>
+                  <hr>
+                </div>
+              </div>
+
+            </form>
+
+            <div class="buttonLogin">
+              <button class="button button-fill" id="googleLogin">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30px" height="30px">
+                  <path fill="#FFC107"
+                    d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                  <path fill="#FF3D00"
+                    d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                  <path fill="#4CAF50"
+                    d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                  <path fill="#1976D2"
+                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                </svg>
+                Iniciar Sesion Con GOOGLE
+              </button>
+
+              <button class="button button-fill" id="guestLogin">
+                <img src="./img/icons8-user-32 (1).png" alt="" srcset="">
+                Iniciar Sesion Como INVITADO
+              </button>
             </div>
+
+
+          </div>
+
         </div>
+      </div>
 
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAg17JF7wOeXq1vJDZEIcJDVH-TDTiM5ZU",
+        authDomain: "onreviews-cb1d0.firebaseapp.com",
+        projectId: "onreviews-cb1d0",
+        storageBucket: "onreviews-cb1d0.appspot.com",
+        messagingSenderId: "1084900006042",
+        appId: "1:1084900006042:web:cdd87c6359a18cbaed2723",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+    </script>
+
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="./lib/framework7/framework7-bundle.min.js"></script>
     <!--<script type="text/javascript" src="lib/framework7/framework7.js"></script>-->
     <script type="text/javascript" src="./js/my-app.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+
 
 
 </body>
