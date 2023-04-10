@@ -10,11 +10,7 @@
   width: 100%;
   height: 100%;
   background: #0f2027; /* fallback for old browsers */
-  background-image: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0) 0%,
-    rgb(26, 33, 64, 1) 100%
-  );
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
   position: absolute;
   z-index: 1000;
   visibility: visible;
@@ -32,7 +28,7 @@
   position: relative;
   color: transparent;
   text-align: center;
-  font-size: 35px;
+  font-size: 40px;
   animation: quote 1s ease-in 1s forwards;
 }
 .bb8 {
@@ -243,7 +239,7 @@
     color: transparent;
   }
   100% {
-    color: #74bad0;
+    color: #fff;
   }
 }
 @keyframes quote {
@@ -251,7 +247,7 @@
     color: transparent;
   }
   100% {
-    color: #74bad0;
+    color: #fff;
   }
 }
 
@@ -364,9 +360,6 @@ li {
   background-color: tomato;
   border-radius: 20px;
 }
-/* .item-input-wrap::after{
-  background: red !important;
-} */
 
 .block-footer {
   margin-top: 2rem !important;
@@ -435,7 +428,7 @@ li {
 }
 
 .toolbar-inner {
-  background: #1a2140;
+  background: #292c3a;
 }
 
 .view {
@@ -446,18 +439,19 @@ li {
   color: #fff;
   padding-top: 0 !important;
 }
+
+#pageContentAboutUs {
+  color: #fff;
+}
+
 .login-screen-content {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url('../img/bgLogin.jpg') !important;
   background-position: center;
   background-repeat: none;
 }
 .page-content {
-  background-image: linear-gradient(
-    94.3deg,
-    rgba(26, 33, 64, 1) 10.9%,
-    rgba(81, 84, 115, 1) 87.1%
-  );
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
 }
 
 .swiperContainer {
@@ -510,7 +504,12 @@ li {
   color: var(--fourth-bg-color);
 }
 .title {
-  color: #fff;
+  color: var(--fourth-bg-color);
+}
+.hrefLink {
+  color: var(--fourth-bg-color);
+  text-decoration: underline;
+  cursor: pointer;
 }
 .simple-list ul {
   background: none !important;
@@ -532,13 +531,13 @@ li {
 .tabbar-labels .tab-link-highlight {
   height: 3.5px !important;
   border-radius: 5px;
-  background: #1a2140 !important;
+  background: #454a61 !important;
 }
 .tabbar-labels .tab-link-active {
-  color: #1a2140 !important;
+  color: #454a61 !important;
 }
 .ripple-wave {
-  background: rgba(26, 33, 64, 0.5) !important;
+  background: rgba(118, 124, 163, 0.5) !important;
 }
 .divToolbar {
   margin: auto;
@@ -564,13 +563,13 @@ li {
 }
 .buttonSearch:hover {
   cursor: pointer;
-  color: #1a2140;
+  color: #292c3a;
 }
 .iconSearch {
   color: #000;
 }
 .iconSearch:hover {
-  color: #1a2140;
+  color: #292c3a;
 }
 .noStyle {
   margin: 0;
@@ -608,7 +607,7 @@ li {
 .tag {
   color: white;
   padding: 8px 18px;
-  background: #1a2140;
+  background: #292c3a;
   border-radius: 50px;
   margin: 5px;
   cursor: pointer;
@@ -643,17 +642,17 @@ li {
     var(--f7-block-padding-horizontal) + var(--f7-safe-area-left)
   );
 }
-#divFilm .game-card:not(:last-child) {
+#containerAll .game-card {
   max-width: 156.66px;
 }
-.game-cards .game-card:not(:last-child) {
+.game-cards .game-card {
   margin-right: 16px;
 }
 #creditsDiv .game-card {
   max-width: 156.66px;
 }
 
-#divFilm .game-cards .game-card:not(:last-child) {
+#containerAll .game-cards .game-card {
   max-width: 156.66px;
 }
 
@@ -784,6 +783,10 @@ iframe {
   width: 100%;
   height: calc(16 * var(--f7-card-content-padding-horizontal));
 }
+sub {
+  color: #a8a8a8;
+  font-size: 10px;
+}
 .demo-card-header-pic .card-header {
   height: 20vw !important;
   background-size: cover !important;
@@ -800,12 +803,12 @@ iframe {
 }
 .textGenres {
   font-size: 14px;
-  background: rgba(81, 84, 115);
+  background: #292c3a;
   width: 25%;
   text-align: center;
   padding: 7px;
   border-radius: 10px;
-  color: var(--third-bg-color);
+  color: var(--fourth-bg-color);
   margin: 5px;
   min-width: 135px;
 }
@@ -819,9 +822,14 @@ iframe {
   margin-bottom: 7%;
   padding: 0;
 }
+.creditsH3 span,
+.noStyle span {
+  font-size: 12px;
+  color: #a8a8a8;
+}
 .creditsDiv {
   color: var(--main-bg-color) !important;
-  height: 45vh;
+  height: 22.5rem;
   margin-bottom: 5% !important;
 }
 
@@ -872,7 +880,7 @@ footer {
   word-wrap: break-word;
   width: 30%;
   min-width: 100px;
-  background: #1a2140;
+  background: #292c3a;
   padding: 20px;
   margin: 10px;
 }
@@ -933,13 +941,14 @@ footer {
   font-size: 12px;
   border: none;
 }
-.userOptionsDiv li:last-child p {
-  color: grey;
-}
+
 .popup-selectImg {
   overflow: auto !important;
-  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
-  background: linear-gradient(to right, #2c5364, #203a43, #0f2027) !important;
+  background-image: linear-gradient(
+    to top,
+    #09203f 0%,
+    #537895 100%
+  ) !important;
 }
 .popup-selectImg .row {
   margin-bottom: 10px;
@@ -970,7 +979,7 @@ footer {
 .popup-close .card {
   margin-bottom: 10px;
 }
-#seasonsDiv .accordion-item {
+#seasonsDivDetails .accordion-item {
   border-radius: 10px;
   background: #fff;
   margin: 10px 0;
@@ -1025,4 +1034,27 @@ footer {
 .card-header p {
   font-size: 16px;
   font-weight: 700;
+}
+
+.maxHeightReview {
+  max-height: 15rem;
+  padding: 0 1rem 0 1rem;
+}
+.maxHeightReview span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: rgba(49, 62, 121, 0.95);
+  line-height: 30px;
+  text-align: right;
+  padding-right: 20px;
+  margin: 0rem 2.5rem 0.2rem 2.5rem;
+  border-radius: 10px;
+}
+.maxHeightReview span a {
+  font-weight: bold;
+  font-size: 17px;
+  color: white;
 }

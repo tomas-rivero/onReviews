@@ -2,6 +2,7 @@
 
 let page = 1;
 let datos = {};
+
 const baseUrl = 'https://api.themoviedb.org/3';
 const apiKey = 'api_key=2dbec8d4e8d5af1a656020c0cd8f2403';
 const imgUrl = 'https://image.tmdb.org/t/p/w500';
@@ -11,7 +12,7 @@ var app = new Framework7({
   // App root element
   root: '#app',
   // App Name
-  name: 'My App',
+  name: 'onReviews',
   // App id
   id: 'com.myapp.test',
   // Enable swipe panel
@@ -25,14 +26,14 @@ var app = new Framework7({
       url: 'index.html',
     },
     {
-      name: 'config',
-      path: '/config/',
-      url: './config.html',
-    },
-    {
       name: 'about',
       path: '/about/',
       url: './about.html',
+    },
+    {
+      name: 'help',
+      path: '/help/',
+      url: './help.html',
     },
     {
       path: '/register/',
@@ -173,8 +174,8 @@ auth.onAuthStateChanged((user) => {
       })
       .catch((error) => {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        let errorCode = error.code;
+        let errorMessage = error.message;
       });
   } else {
     console.log('auth: cerrado');
@@ -186,7 +187,6 @@ $$(document).on('page:init', '.page[data-name="register"]', function (e) {
   const textErrorRegister = document.getElementById('textErrorRegister');
   registerForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    console.log('entro');
     const userName = document.getElementById('nombreUsuario');
     const email = document.getElementById('nombreRegistro');
     const password = document.getElementById('passwordRegistro');
@@ -243,12 +243,8 @@ $$(document).on('page:init', '.page[data-name="resetPassword"]', function (e) {
         setTimeout(() => {
           textErrorForgot.classList.remove('blink-1');
           textErrorForgot.classList.add('blink-2');
+          mainView.router.navigate('/index/');
         }, 2000);
-        setTimeout(() => {
-          textErrorForgot.classList.remove('blink-2');
-          textErrorForgot.textContent = '';
-          forgotForm.reset();
-        }, 2600);
       })
       .catch((error) => {
         textErrorForgot.classList.add('blink-1');
@@ -277,24 +273,22 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
   currentUserInit.textContent = data.nameUser;
   emailUser.textContent = data.emailUser;
 
+  let GENRES = [];
+  let WATCHES = [];
+  let TRAILER = [];
+
   const apiUrlCount =
     baseUrl + '/discover/movie?' + apiKey + '&page=1&sort_by=vote_count.desc&';
-
   const apiUrlPopup = baseUrl + '/trending/tv/week?' + apiKey;
-
   const apiUrlSellers = baseUrl + '/trending/all/week?' + apiKey;
-
-  const searchUrl = baseUrl + '/search/movie?' + apiKey;
-
-  const pageContent = document.getElementById('pageContent');
   const swiperWrapper = document.getElementById('swiperWrapper');
-  const cardCount = document.getElementById('cardCount');
+  const containerSeasons = document.getElementById('containerSeasons');
   const searchFilm = document.getElementById('searchFilm');
-  const cardPopup = document.getElementById('cardPopu');
+  const containerMovies = document.getElementById('containerMovies');
 
   const imagePopup = document.getElementById('imagePopup');
 
-  const divFilm = document.getElementById('divFilm');
+  const containerAll = document.getElementById('containerAll');
 
   const clearButton = document.getElementById('clearBtn');
 
@@ -305,6 +299,8 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
   const next = document.getElementById('btnNext');
 
   const spanPag = document.getElementById('spanPag');
+  const searchGenrer = document.getElementById('searchGenrer');
+  let selectedGenre = [];
 
   setTimeout(() => {
     new Swiper('.swiper', {
@@ -336,7 +332,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
       swiperSlide.innerHTML = `
    
         <div class="imgSwiper" style="background-image: linear-gradient( rgba(26, 33, 64, 0) 70%, rgba(26, 33, 64, 1) 100% ), url('${imgUrl}${poster_path}')">
-     
+
         </div>
 
       `;
@@ -348,7 +344,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     e.preventDefault();
     if (film.value !== '') {
       searchGenrer.innerHTML = '';
-      divFilm.innerHTML = '';
+      containerAll.innerHTML = '';
       const url =
         baseUrl + '/search/multi?' + apiKey + `&page=1&query=${film.value}`;
       fetch(url)
@@ -357,29 +353,27 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
           const { results } = data;
 
           if (results.length == 0) {
-            divFilm.innerHTML = '';
+            containerAll.innerHTML = '';
             const searchResults = document.createElement('a');
             searchResults.innerHTML = `
             <div>
             <p>No hay películas que coincidan con tu consulta. Por favor, sea mas detallado o vuelva al <a onclick='window.location.reload()'>inicio</a>.</p>
             </div>
           `;
-            divFilm.appendChild(searchResults);
+            containerAll.appendChild(searchResults);
           } else {
             results.map((search) => {
               const searchResults = document.createElement('a');
+              const voteCount = search.vote_average.toFixed(1);
               searchResults.setAttribute('id', search.id);
               searchResults.classList.add('game-card');
               searchResults.classList.add('scroll-block-item');
 
-              divFilm.classList.add('block');
-              divFilm.classList.add('game-cards');
-              divFilm.classList.add('scroll-block');
+              containerAll.classList.add('block');
+              containerAll.classList.add('game-cards');
+              containerAll.classList.add('scroll-block');
 
               searchResults.addEventListener('click', function () {
-                let TRAILER = [];
-                let GENRES = [];
-                let WATCHES = [];
                 imagePopup.innerHTML = '';
                 if (search.media_type === 'movie') {
                   const idUrl =
@@ -425,218 +419,128 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                   await fetch(url)
                     .then((res) => res.json())
                     .then(async (data) => {
-                      console.log(data);
                       const movieEl = document.createElement('div');
                       movieEl.classList.add('view');
                       movieEl.classList.add('view-init');
 
+                      function toHoursAndMinutes(runtime) {
+                        const hours = Math.floor(runtime / 60);
+                        const minutes = runtime % 60;
+                        return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
+                      }
+
                       if (search.media_type === 'movie') {
                         movieEl.innerHTML = `
-                      <div class="page">
-                        <div class="page-content">
-                          <div class="marginCard">
-                            <a class="popup-close" href="#">
-                              <i class="iconX f7-icons">multiply</i>
-                            </a>
-                          </div>
-                          <div class="card demo-card-header-pic">
-                            <div style="background-image:url(${
-                              imgUrl + data.backdrop_path
-                            });min-height:300px" class="card-header align-items-flex-end"> data.release_date
-                                })</p>
+                        <div class="page">
+                          <div class="page-content">
+                            <div class="marginCard">
+                              <a class="popup-close" href="#">
+                                <i class="iconX f7-icons">multiply</i>
+                              </a>
                             </div>
-                            <div class="card-content card-content-padding">
-                              <p>${data.tagline}</p>
-                              <p>${data.overview}</p>
-                              <h3 class="noStyle">Generos:</h3>
-                              <div class="genreDiv" id="genreDiv"></div>
-                              <h3 class="creditsH3">Reparto:</h3>
-                              <div class="block game-cards scroll-block creditsDiv" id="creditsDiv"></div>
-                              <h3 class="noStyle">Donde ver:</h3>
-                              <div class="divWatch" id="watchDiv"></div>
-                              <h3 class="creditsH3">Trailers:</h3>
-                      
-                              <div class="block game-cards scroll-block trailersDiv" id="trailersDiv"></div>
+                            <div class="card demo-card-header-pic">
+                              <div style="background-image:url(${
+                                imgUrl + data.backdrop_path
+                              });min-height:300px" class="card-header align-items-flex-end">
+                             </div>
+                              <div class="card-content card-content-padding">
+                                <div class="divFlex">
+                                <h1 class="noStyle">${data.title}${
+                          data.homepage &&
+                          `<a class="external" target="_blank" href=${data.homepage}>(Ir)</a>`
+                        }</h1>
+                                <h4 class="noStyle">Duracion: ${toHoursAndMinutes(
+                                  data.runtime
+                                )}</h4>
+                                </div>
+                                <p>${data.tagline}</p>
+                                <p>${data.overview}</p>
+                                <div class="containerGenre">
+                                   <h3 class="noStyle">Generos:</h3>
+                                   <div class="genreDiv" id="genreDiv"></div>
+                                </div>
+                                <h3 class="creditsH3">Reparto: <span>(Click para mas informacion)</span></h3>
+                                
+                                <div class="block game-cards scroll-block creditsDiv" id="creditsDiv"></div>
+                                <h3 class="noStyle">Donde ver:</h3>
+                                <div class="divWatch" id="watchDiv"></div>
+            
+                                <h3 class="creditsH3">Trailers:</h3>
+                                
+                                <div class="trailersDiv" id="trailersDiv"></div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      `;
+                        `;
                       } else {
                         movieEl.innerHTML = `
-                      <div class="page">
-                        <div class="page-content">
-                          <div class="marginCard">
-                            <a class="popup-close" href="#">
-                              <i class="iconX f7-icons">multiply</i>
-                            </a>
-                          </div>
-                          <div class="card demo-card-header-pic">
-                            <div style="background-image:url(${
-                              imgUrl + data.backdrop_path
-                            });min-height:300px" class="card-header align-items-flex-end">
-                                                                     data.first_air_date
-                                })</p>
+                        <div class="page">
+                          <div class="page-content">
+                            <div class="marginCard">
+                              <a class="popup-close" href="#">
+                                <i class="iconX f7-icons">multiply</i>
+                              </a>
                             </div>
-                            <div class="card-content card-content-padding">
-                              <p>${data.tagline}</p>
-                              <p>${data.overview}</p>
-                              <div class="containerGenre">
-                                <h3 class="noStyle">Generos:</h3>
-                                <div class="genreDiv" id="genreDiv"></div>
+                            <div class="card demo-card-header-pic">
+                              <div style="background-image:url(${
+                                imgUrl + data.backdrop_path
+                              });min-height:300px" class="card-header align-items-flex-end">
+                                             
                               </div>
-                              <h3 class="creditsH3">Reparto:</h3>
-                              <div class="block game-cards scroll-block creditsDiv" id="creditsDiv"></div>
-                              <h3 class="noStyle">Donde ver:</h3>
-                              <div class="divWatch" id="watchDiv"></div>
-                              <h3 class="creditsH3">Trailers:</h3>
-                      
-                              <div class="block game-cards scroll-block trailersDiv" id="trailersDiv"></div>
+                              
+                              <div class="card-content card-content-padding">
+                              <h1 class="noStyle">${data.name}${
+                          data.homepage &&
+                          `<a class="external" href=${data.homepage}>(Ir)</a>`
+                        }</h1>
+                                <p>${data.tagline}</p>
+                                <p>${data.overview}</p>
+                                <div class="containerGenre">
+                                   <h3 class="noStyle">Generos:</h3>
+                                   <div class="genreDiv" id="genreDiv"></div>
+                                </div>
+                                <h3 class="noStyle">Temporadas: </h3>
+                                <div id="seasonsDiv"></div>
+                                <h3 class="creditsH3">Reparto: <span>(Click para mas informacion)</span></h3>
+                                
+                                <div class="block game-cards scroll-block creditsDiv" id="creditsDiv"></div>
+                                
+                                <h3 class="noStyle">Donde ver:</h3>
+                                <div class="divWatch" id="watchDiv"></div>
+                                <h3 class="creditsH3">Trailers:</h3>
+                                
+                                <div class="trailersDiv" id="trailersDiv"></div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      `;
+                        `;
                       }
 
                       imagePopup.appendChild(movieEl);
 
-                      if (data.genres.length > 0) {
-                        const genreDiv = document.getElementById('genreDiv');
-                        data.genres.map((generos) => {
-                          const genre = document.createElement('h3');
-                          genre.classList.add('textGenres');
-                          GENRES.push(generos.name);
-                          genre.innerHTML = `
-                          ${GENRES[0]}
-                          `;
-                          GENRES = [];
-                          genreDiv.appendChild(genre);
-                        });
-                      } else {
-                        const genreDiv = document.getElementById('genreDiv');
-                        const genre = document.createElement('span');
-                        genre.innerHTML = `No existen generos`;
-                        genreDiv.appendChild(genre);
-                      }
-
-                      if (data.credits.cast.length > 0) {
-                        const creditsDiv =
-                          document.getElementById('creditsDiv');
-                        data.credits.cast.map((credit) => {
-                          const reparto = document.createElement('a');
-                          reparto.setAttribute('id', credit.id);
-                          reparto.classList.add('game-card');
-                          reparto.classList.add('scroll-block-item');
-                          reparto.innerHTML = `
-                      <div class="game-card-image popup-open" data-popup=".popup-about">
-                         <img src="${
-                           credit.profile_path
-                             ? imgUrl + credit.profile_path
-                             : '../img/user.png'
-                         }"
-                          alt="${credit.name}">
-                            </div>
-                        <div id="name" class="game-card-name">${
-                          credit.name
-                        }</div>
-                        <div class="game-card-tagline">${credit.character}</div>
-                        `;
-                          if (
-                            imgUrl + credit.profile_path ===
-                            'https://image.tmdb.org/t/p/w500null'
-                          ) {
-                            reparto.innerHTML = `
-                        <div class="game-card-image popup-open" data-popup=".popup-about">
-                        <img src="../img/user.png"
-                        alt="${credit.name}">
-                              </div>
-                          <div id="name" class="game-card-name">${credit.name}</div>
-                          <div class="game-card-tagline">${credit.character}</div>
-                          `;
-                          }
-                          creditsDiv.appendChild(reparto);
-                        });
-                      } else {
-                        const creditsDiv =
-                          document.getElementById('creditsDiv');
-                        const reparto = document.createElement('span');
-                        reparto.innerHTML = `No existe reparto`;
-                        creditsDiv.appendChild(reparto);
-                        console.log('No existe reparto');
-                      }
-                    });
-
-                  await fetch(url2)
-                    .then((res) => res.json())
-                    .then((data) => {
-                      const { results } = data;
-                      const { AR } = results;
-                      if (AR.flatrate !== undefined) {
-                        const watchDiv = document.getElementById('watchDiv');
-                        AR.flatrate.map((watches) => {
-                          const watch = document.createElement('div');
-                          WATCHES.push(watches.logo_path);
-                          WATCHES.push(watches.provider_name);
-                          watch.innerHTML = `
-                          <img class="iconWatch" src="${
-                            imgUrl + WATCHES[0]
-                          }" alt="${WATCHES[1]}">
-                          <h3>${WATCHES[1]}</h3>
-                    `;
-                          WATCHES = [];
-                          watchDiv.appendChild(watch);
-                        });
-                      } else {
-                        const watchDiv = document.getElementById('watchDiv');
-                        const watch = document.createElement('span');
-                        watch.innerHTML = `No existe donde verla`;
-                        watchDiv.appendChild(watch);
-                      }
-                    });
-
-                  await fetch(url3)
-                    .then((res) => res.json())
-                    .then(async (data) => {
-                      const { results } = data;
-                      results.map((trailer) => {
-                        if (trailer.type === 'Trailer') {
-                          if (trailer.type.length > 0) {
-                            const trailersDiv =
-                              document.getElementById('trailersDiv');
-                            const video = document.createElement('div');
-                            video.classList.add('game-card');
-                            video.classList.add('scroll-block-item');
-                            video.classList.add('trailerDiv');
-
-                            TRAILER.push(
-                              `  <iframe src="https://www.youtube-nocookie.com/embed/${trailer.key}" title="${trailer.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-                            );
-                            video.innerHTML = `${TRAILER[0]}`;
-                            TRAILER = [];
-                            trailersDiv.appendChild(video);
-                          }
-                        }
-                      });
+                      showDetails(data, url, url2, url3, search.id);
                     });
                 }
               });
 
               if (search.media_type === 'movie') {
                 searchResults.innerHTML = `
-              <div class="game-card-image popup-open" data-popup=".popup-about">
-                  <img src="
-                  ${
-                    search.poster_path
-                      ? imgUrl + search.poster_path
-                      : '../img/film.png'
-                  }"
-                      alt="${search.title}">
-              </div>
-              <div id="name" class="game-card-name">${search.title}</div>
-              <div class="game-card-tagline tagline">${
-                search.release_date
-              }</div>
+                <div class="game-card-image popup-open" data-popup=".popup-about">
+                <img src="${
+                  search.poster_path
+                    ? imgUrl + search.poster_path
+                    : './img/film.png'
+                }"
+                    alt="${search.title}">
+                    <div class="vote">
+                      <h4>${voteCount}</h4>
+                    </div>
+            </div>
+       
+            <div id="name" class="game-card-name">${search.title}</div>
+            <div class="game-card-tagline tagline">${search.release_date}</div>
             `;
               } else {
                 searchResults.innerHTML = `
@@ -645,7 +549,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                       ${
                         search.poster_path
                           ? imgUrl + search.poster_path
-                          : '../img/film.png'
+                          : './img/film.png'
                       }"
                           alt="${search.name}">
                   </div>
@@ -656,46 +560,46 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                 `;
               }
 
-              divFilm.appendChild(searchResults);
+              containerAll.appendChild(searchResults);
             });
           }
         });
     } else {
-      divFilm.innerHTML = '';
+      containerAll.innerHTML = '';
       const searchResults = document.createElement('div');
       searchResults.innerHTML = `
   
       <p>No hay películas que coincidan con tu consulta. Por favor, sea mas detallado o vuelva al <a onclick='window.location.reload()'>inicio</a>.</p>
   
     `;
-      divFilm.appendChild(searchResults);
+      containerAll.appendChild(searchResults);
     }
   });
 
   const genres = [
     {
       id: 28,
-      name: 'Action',
+      name: 'Accion',
     },
     {
       id: 12,
-      name: 'Adventure',
+      name: 'Aventura',
     },
     {
       id: 16,
-      name: 'Animation',
+      name: 'Animacion',
     },
     {
       id: 35,
-      name: 'Comedy',
+      name: 'Comedia',
     },
     {
       id: 80,
-      name: 'Crime',
+      name: 'Crimen',
     },
     {
       id: 99,
-      name: 'Documentary',
+      name: 'Documental',
     },
     {
       id: 18,
@@ -703,15 +607,15 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     },
     {
       id: 10751,
-      name: 'Family',
+      name: 'Familiar',
     },
     {
       id: 14,
-      name: 'Fantasy',
+      name: 'Fantasia',
     },
     {
       id: 36,
-      name: 'History',
+      name: 'Historia',
     },
     {
       id: 27,
@@ -719,11 +623,11 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     },
     {
       id: 10402,
-      name: 'Music',
+      name: 'Musical',
     },
     {
       id: 9648,
-      name: 'Mystery',
+      name: 'Misterio',
     },
     {
       id: 10749,
@@ -731,11 +635,11 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     },
     {
       id: 878,
-      name: 'Science/Fiction',
+      name: 'Ciencia/Ficcion',
     },
     {
       id: 10770,
-      name: 'TV/Movie',
+      name: 'TV/Pelicula',
     },
     {
       id: 53,
@@ -743,16 +647,13 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     },
     {
       id: 10752,
-      name: 'War',
+      name: 'Guerra',
     },
     {
       id: 37,
-      name: 'Western',
+      name: 'Occidental',
     },
   ];
-
-  const searchGenrer = document.getElementById('searchGenrer');
-  let selectedGenre = [];
 
   setGenre();
 
@@ -778,7 +679,6 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
             selectedGenre.push(genre.id);
           }
         }
-        console.log(selectedGenre);
         getMoviesCount(
           apiUrlCount + '&with_genres=' + encodeURI(selectedGenre.join(','))
         );
@@ -833,15 +733,18 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        getMoviesByVoteCount(data.results);
+        getMovies(data.results);
       });
   }
 
-  const getMoviesByVoteCount = (data) => {
-    let GENRES = [];
-    let WATCHES = [];
-    let TRAILER = [];
-    cardCount.innerHTML = '';
+  fetch(apiUrlPopup)
+    .then((res) => res.json())
+    .then((data) => {
+      getSeasons(data.results);
+    });
+
+  const getMovies = (data) => {
+    containerMovies.innerHTML = '';
     data.forEach((movie) => {
       const voteCount = movie.vote_average.toFixed(1);
 
@@ -868,6 +771,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
           'providers' +
           '?' +
           apiKey;
+        const urlReviews = baseUrl + `/movie/${movie.id}/reviews?` + apiKey;
         getIdUrl(idUrl, viewUrl);
         async function getIdUrl(url, url2) {
           await fetch(url)
@@ -912,8 +816,9 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                    </div>
                     <div class="card-content card-content-padding">
                       <div class="divFlex">
-                      <h1 class="noStyle">${title}${
-                homepage && `<a class="external" href=${homepage}>(Ir)</a>`
+                           <h1 class="noStyle">${title}${
+                homepage &&
+                `<a class="external" target="_blank" href=${homepage}>(Ir)</a>`
               }</h1>
                       <h4 class="noStyle">Duracion: ${toHoursAndMinutes(
                         runtime
@@ -925,7 +830,8 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                          <h3 class="noStyle">Generos:</h3>
                          <div class="genreDiv" id="genreDiv"></div>
                       </div>
-                      <h3 class="creditsH3">Reparto:</h3>
+                      <h3 class="creditsH3">Reparto: <span>(Click para mas informacion)</span></h3>
+                      
                       <div class="block game-cards scroll-block creditsDiv" id="creditsDiv"></div>
                       <h3 class="noStyle">Donde ver:</h3>
                       <div class="divWatch" id="watchDiv"></div>
@@ -933,6 +839,11 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                       <h3 class="creditsH3">Trailers:</h3>
                       
                       <div class="trailersDiv" id="trailersDiv"></div>
+                      <h3 class="creditsH3">Reseñas:</h3>
+                      
+                      <div class="list accordion-list">
+                        <ul id="reviewsDiv"></ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -940,103 +851,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
               `;
 
               imagePopup.appendChild(movieEl);
-              if (genres.length > 0) {
-                const genreDiv = document.getElementById('genreDiv');
-                genres.map((generos) => {
-                  const genre = document.createElement('h3');
-                  genre.classList.add('textGenres');
-                  GENRES.push(generos.name);
-                  genre.innerHTML = `
-                    ${GENRES[0]}
-                    `;
-                  GENRES = [];
-                  genreDiv.appendChild(genre);
-                });
-              } else {
-                const genreDiv = document.getElementById('genreDiv');
-                const genre = document.createElement('span');
-                genre.innerHTML = `No existen generos`;
-                genreDiv.appendChild(genre);
-              }
-
-              if (credits.cast.length > 0) {
-                const creditsDiv = document.getElementById('creditsDiv');
-                credits.cast.map((credit) => {
-                  const reparto = document.createElement('a');
-                  reparto.setAttribute('id', credit.id);
-                  reparto.classList.add('game-card');
-                  reparto.classList.add('scroll-block-item');
-                  reparto.classList.add('external');
-                  reparto.setAttribute(
-                    'href',
-                    `https://www.themoviedb.org/person/${credit.id}`
-                  );
-                  reparto.innerHTML = `
-                <div class="game-card-image popup-open" data-popup=".popup-about">
-                   <img src="${
-                     credit.profile_path
-                       ? imgUrl + credit.profile_path
-                       : './img/user.png'
-                   }"
-                    alt="${credit.name}">
-                      </div>
-                  <div id="name" class="game-card-name">${credit.name}</div>
-                  <div class="game-card-tagline">${credit.character}</div>
-                  `;
-
-                  creditsDiv.appendChild(reparto);
-                });
-              } else {
-                const creditsDiv = document.getElementById('creditsDiv');
-                const reparto = document.createElement('span');
-                reparto.innerHTML = `No existe reparto`;
-                creditsDiv.appendChild(reparto);
-                console.log('No existe reparto');
-              }
-
-              if (trailers.youtube.length > 0) {
-                const trailersDiv = document.getElementById('trailersDiv');
-                trailers.youtube.map((cortos) => {
-                  const trailer = document.createElement('div');
-                  trailer.classList.add('game-card');
-                  trailer.classList.add('scroll-block-item');
-                  trailer.classList.add('trailerDiv');
-
-                  TRAILER.push(
-                    `  <iframe src="https://www.youtube-nocookie.com/embed/${cortos.source}" title="${cortos.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-                  );
-                  trailer.innerHTML = `${TRAILER[0]}`;
-                  TRAILER = [];
-                  trailersDiv.appendChild(trailer);
-                });
-              }
-            });
-          await fetch(url2)
-            .then((res) => res.json())
-            .then((data) => {
-              const { results } = data;
-              const { AR } = results;
-              if (AR.flatrate !== undefined) {
-                const watchDiv = document.getElementById('watchDiv');
-                AR.flatrate.map((watches) => {
-                  const watch = document.createElement('div');
-                  WATCHES.push(watches.logo_path);
-                  WATCHES.push(watches.provider_name);
-                  watch.innerHTML = `
-                    <img class="iconWatch" src="${imgUrl + WATCHES[0]}" alt="${
-                    WATCHES[1]
-                  }">
-                    <h3>${WATCHES[1]}</h3>
-              `;
-                  WATCHES = [];
-                  watchDiv.appendChild(watch);
-                });
-              } else {
-                const watchDiv = document.getElementById('watchDiv');
-                const watch = document.createElement('span');
-                watch.innerHTML = `No existe donde verla`;
-                watchDiv.appendChild(watch);
-              }
+              showDetails(results, idUrl, viewUrl, urlReviews);
             });
         }
       });
@@ -1058,25 +873,12 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
      
                 `;
 
-      cardCount.appendChild(movieEl);
+      containerMovies.appendChild(movieEl);
     });
   };
 
-  getMoviesPop(apiUrlPopup);
-
-  function getMoviesPop(url) {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        getMoviesByPopup(data.results);
-      });
-  }
-
-  const getMoviesByPopup = (data) => {
-    let TRAILER = [];
-    let GENRES = [];
-    let WATCHES = [];
-    cardPopup.innerHTML = '';
+  const getSeasons = (data) => {
+    containerSeasons.innerHTML = '';
     data.forEach((movie) => {
       const voteCount = movie.vote_average.toFixed(1);
       const movieEl = document.createElement('a');
@@ -1096,28 +898,17 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
         const viewUrl =
           baseUrl + '/tv/' + movie.id + '/watch/' + 'providers' + '?' + apiKey;
         const trailerUrl = baseUrl + '/tv/' + movie.id + '/videos?' + apiKey;
-        getIdUrl(idUrl, viewUrl, trailerUrl);
-        async function getIdUrl(url, url2, url3) {
+        const urlReviews = baseUrl + `/tv/${movie.id}/reviews?` + apiKey;
+        getIdUrl(idUrl);
+        async function getIdUrl(url) {
           await fetch(url)
             .then((res) => res.json())
             .then(async (data) => {
               results = data;
               console.log(results);
-              const {
-                name,
-                backdrop_path,
-                tagline,
-                overview,
-                genres,
-                homepage,
-                credits,
-                seasons,
-              } = results;
-              // function toHoursAndMinutes(runtime) {
-              //   const hours = Math.floor(runtime / 60);
-              //   const minutes = runtime % 60;
-              //   return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
-              // }
+              const { name, backdrop_path, tagline, overview, homepage } =
+                results;
+
               const movieEl = document.createElement('div');
               movieEl.classList.add('view');
               movieEl.classList.add('view-init');
@@ -1146,9 +937,10 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                          <h3 class="noStyle">Generos:</h3>
                          <div class="genreDiv" id="genreDiv"></div>
                       </div>
-                      <h3 class="noStyle">Temporadas:</h3>
+                      <h3 class="noStyle">Temporadas: </h3>
                       <div id="seasonsDiv"></div>
-                      <h3 class="creditsH3">Reparto:</h3>
+                      <h3 class="creditsH3">Reparto: <span>(Click para mas informacion)</span></h3>
+                      
                       <div class="block game-cards scroll-block creditsDiv" id="creditsDiv"></div>
                       
                       <h3 class="noStyle">Donde ver:</h3>
@@ -1156,153 +948,26 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                       <h3 class="creditsH3">Trailers:</h3>
                       
                       <div class="trailersDiv" id="trailersDiv"></div>
+                      <h3 class="creditsH3">Reseñas:</h3>
+                      
+                      <div class="list accordion-list">
+                        <ul id="reviewsDiv"></ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               `;
               imagePopup.appendChild(movieEl);
-
-              const genreDiv = document.getElementById('genreDiv');
-              genres.map((generos) => {
-                const genre = document.createElement('h3');
-                genre.classList.add('textGenres');
-                GENRES.push(generos.name);
-                genre.innerHTML = `
-                  ${GENRES[0]}
-                  `;
-                GENRES = [];
-                genreDiv.appendChild(genre);
-              });
-
-              const seasonsDiv = document.getElementById('seasonsDiv');
-              seasons.map((season) => {
-                const seasonUrl =
-                  baseUrl +
-                  '/tv/' +
-                  movie.id +
-                  '/season/' +
-                  season.season_number +
-                  '?' +
-                  apiKey +
-                  '&language=es';
-                fetch(seasonUrl)
-                  .then((res) => res.json())
-                  .then((data) => {
-                    const { name, episodes, air_date } = data;
-                    const seasonDiv = document.createElement('div');
-                    seasonDiv.classList.add('popup-close');
-                    seasonDiv.classList.add('cardSeason');
-                    seasonDiv.innerHTML = `
-   
-                    <div class="card-header">
-                    <h3>${name}</h3>
-                    <p>${
-                      episodes.length > 0
-                        ? episodes.length + ' episodios'
-                        : 'No se agregaron episodios'
-                    }</p> <span> ${
-                      air_date !== null ? air_date : 'No hay fecha registrada'
-                    }</span>
-                  
-                    </div>
-                    <div class="card-content card-content-padding">${
-                      episodes.length > 0
-                        ? episodes[0].overview !== ''
-                          ? episodes[0].overview
-                          : 'No hay descripcion'
-                        : 'No hay descripcion'
-                    }</div>
-
-                `;
-
-                    seasonDiv.addEventListener('click', () => {
-                      mainView.router.navigate(`/seasons/${String(movie.id)}/`);
-                    });
-                    seasonsDiv.appendChild(seasonDiv);
-                  });
-              });
-
-              if (credits.cast.length > 0) {
-                const creditsDiv = document.getElementById('creditsDiv');
-                credits.cast.map((credit) => {
-                  const reparto = document.createElement('a');
-                  reparto.setAttribute('id', credit.id);
-                  reparto.classList.add('game-card');
-                  reparto.classList.add('scroll-block-item');
-                  reparto.classList.add('external');
-                  reparto.setAttribute(
-                    'href',
-                    `https://www.themoviedb.org/person/${credit.id}`
-                  );
-                  reparto.innerHTML = `
-                  <div class="game-card-image popup-open" data-popup=".popup-about">
-                     <img src="${
-                       credit.profile_path
-                         ? imgUrl + credit.profile_path
-                         : './img/user.png'
-                     }"
-                      alt="${credit.name}">
-                        </div>
-                    <div id="name" class="game-card-name">${credit.name}</div>
-                    <div class="game-card-tagline">${credit.character}</div>
-                    `;
-
-                  creditsDiv.appendChild(reparto);
-                });
-              } else {
-                const creditsDiv = document.getElementById('creditsDiv');
-                const reparto = document.createElement('span');
-                reparto.innerHTML = `No existe reparto`;
-                creditsDiv.appendChild(reparto);
-                creditsDiv.style.height = '25px';
-                console.log('No existe reparto');
-              }
             });
-          await fetch(url2)
-            .then((res) => res.json())
-            .then((data) => {
-              const { results } = data;
-              const { AR } = results;
-              const watchDiv = document.getElementById('watchDiv');
-              AR.flatrate.map((watches) => {
-                const watch = document.createElement('div');
-                WATCHES.push(watches.logo_path);
-                WATCHES.push(watches.provider_name);
-                watch.innerHTML = `
-                    <img class="iconWatch" src="${imgUrl + WATCHES[0]}" alt="${
-                  WATCHES[1]
-                }">
-                    <h3>${WATCHES[1]}</h3>
-              `;
-                WATCHES = [];
-                watchDiv.appendChild(watch);
-              });
-            });
-
-          await fetch(url3)
-            .then((res) => res.json())
-            .then(async (data) => {
-              const { results } = data;
-              results.map((trailer) => {
-                if (trailer.type === 'Trailer') {
-                  if (trailer.type.length > 0) {
-                    const trailersDiv = document.getElementById('trailersDiv');
-                    const video = document.createElement('div');
-                    video.classList.add('game-card');
-                    video.classList.add('scroll-block-item');
-                    video.classList.add('trailerDiv');
-
-                    TRAILER.push(
-                      `  <iframe src="https://www.youtube-nocookie.com/embed/${trailer.key}" title="${trailer.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-                    );
-                    video.innerHTML = `${TRAILER[0]}`;
-                    TRAILER = [];
-                    trailersDiv.appendChild(video);
-                  }
-                }
-              });
-            });
+          showDetails(
+            results,
+            idUrl,
+            viewUrl,
+            trailerUrl,
+            movie.id,
+            urlReviews
+          );
         }
       });
       movieEl.innerHTML = `
@@ -1319,9 +984,253 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
                   }</div>
                 `;
 
-      cardPopup.appendChild(movieEl);
+      containerSeasons.appendChild(movieEl);
     });
   };
+
+  async function showDetails(results, url, url2, url3, id, urlReviews) {
+    if (results.genres.length > 0) {
+      const genreDiv = document.getElementById('genreDiv');
+      results.genres.map((generos) => {
+        const genre = document.createElement('h3');
+        genre.classList.add('textGenres');
+        GENRES.push(generos.name);
+        genre.innerHTML = `
+        ${GENRES[0]}
+        `;
+        GENRES = [];
+        genreDiv.appendChild(genre);
+      });
+    } else {
+      const genreDiv = document.getElementById('genreDiv');
+      const genre = document.createElement('span');
+      genre.innerHTML = `No existen generos`;
+      genreDiv.appendChild(genre);
+    }
+
+    if (results.credits.cast.length > 0) {
+      const creditsDiv = document.getElementById('creditsDiv');
+      results.credits.cast.map((credit) => {
+        const reparto = document.createElement('a');
+        reparto.setAttribute('id', credit.id);
+        reparto.classList.add('game-card');
+        reparto.classList.add('scroll-block-item');
+        reparto.classList.add('external');
+        reparto.setAttribute(
+          'href',
+          `https://www.themoviedb.org/person/${credit.id}`
+        );
+        reparto.setAttribute('target', '_blank');
+        reparto.innerHTML = `
+    <div class="game-card-image popup-open" data-popup=".popup-about">
+       <img src="${
+         credit.profile_path ? imgUrl + credit.profile_path : './img/user.png'
+       }"
+        alt="${credit.name}">
+          </div>
+      <div id="name" class="game-card-name">${credit.name}</div>
+      <div class="game-card-tagline">${credit.character}</div>
+      `;
+
+        creditsDiv.appendChild(reparto);
+      });
+    } else {
+      const creditsDiv = document.getElementById('creditsDiv');
+      const reparto = document.createElement('span');
+      reparto.innerHTML = `No existe reparto`;
+      creditsDiv.appendChild(reparto);
+    }
+
+    if (url.includes('tv')) {
+      const seasonsDiv = document.getElementById('seasonsDiv');
+      results.seasons.map((season) => {
+        const seasonUrl =
+          baseUrl +
+          '/tv/' +
+          id +
+          '/season/' +
+          season.season_number +
+          '?' +
+          apiKey +
+          '&language=es';
+        fetch(seasonUrl)
+          .then((res) => res.json())
+          .then((data) => {
+            const { name, episodes, air_date } = data;
+            const seasonDiv = document.createElement('div');
+            seasonDiv.classList.add('popup-close');
+            seasonDiv.classList.add('cardSeason');
+            seasonDiv.innerHTML = `
+
+            <div class="card-header">
+            <h3>${name}</h3>
+            <p>${
+              episodes.length > 0
+                ? episodes.length + ' episodios'
+                : 'No se agregaron episodios'
+            }</p> <span> ${
+              air_date !== null ? air_date : 'No hay fecha registrada'
+            }</span>
+          
+            </div>
+            <div class="card-content card-content-padding">${
+              episodes.length > 0
+                ? episodes[0].overview !== ''
+                  ? episodes[0].overview
+                  : 'No hay descripcion'
+                : 'No hay descripcion'
+            }</div>
+
+        `;
+
+            seasonDiv.addEventListener('click', () => {
+              mainView.router.navigate(`/seasons/${String(id)}/`);
+            });
+            seasonsDiv.appendChild(seasonDiv);
+          });
+      });
+    }
+    await fetch(url2)
+      .then((res) => res.json())
+      .then((data) => {
+        const { results } = data;
+        const { AR } = results;
+        if (AR !== undefined) {
+          const watchDiv = document.getElementById('watchDiv');
+          AR.flatrate.map((watches) => {
+            const watch = document.createElement('div');
+            WATCHES.push(watches.logo_path);
+            WATCHES.push(watches.provider_name);
+            watch.innerHTML = `
+          <img class="iconWatch" src="${imgUrl + WATCHES[0]}" alt="${
+              WATCHES[1]
+            }">
+          <h3>${WATCHES[1]}</h3>
+    `;
+            WATCHES = [];
+            watchDiv.appendChild(watch);
+          });
+        } else {
+          const watchDiv = document.getElementById('watchDiv');
+          const watch = document.createElement('span');
+          watch.innerHTML = `No existe donde verla`;
+          watchDiv.appendChild(watch);
+        }
+      });
+
+    if (url.includes('tv')) {
+      await fetch(url3)
+        .then((res) => res.json())
+        .then(async (data) => {
+          const { results } = data;
+          if (results.length !== 0) {
+            results.map((trailer) => {
+              if (trailer.type === 'Trailer') {
+                if (trailer.type.length > 0) {
+                  const trailersDiv = document.getElementById('trailersDiv');
+                  const video = document.createElement('div');
+                  video.classList.add('game-card');
+                  video.classList.add('scroll-block-item');
+                  video.classList.add('trailerDiv');
+
+                  TRAILER.push(
+                    `  <iframe src="https://www.youtube-nocookie.com/embed/${trailer.key}" title="${trailer.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+                  );
+                  video.innerHTML = `${TRAILER[0]}`;
+                  TRAILER = [];
+                  trailersDiv.appendChild(video);
+                }
+              }
+            });
+          } else {
+            const trailerDiv = document.getElementById('trailersDiv');
+            const trail = document.createElement('span');
+            trail.innerHTML = `No existen trailers`;
+            trailerDiv.appendChild(trail);
+          }
+        });
+    } else {
+      if (results.trailers.youtube.length > 0) {
+        const trailersDiv = document.getElementById('trailersDiv');
+        results.trailers.youtube.map((cortos) => {
+          const trailer = document.createElement('div');
+          trailer.classList.add('game-card');
+          trailer.classList.add('scroll-block-item');
+          trailer.classList.add('trailerDiv');
+
+          TRAILER.push(
+            `  <iframe src="https://www.youtube-nocookie.com/embed/${cortos.source}" title="${cortos.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+          );
+          trailer.innerHTML = `${TRAILER[0]}`;
+          TRAILER = [];
+          trailersDiv.appendChild(trailer);
+        });
+      }
+    }
+    console.log(url);
+
+    if (url.includes('tv')) {
+      const reviewsDiv = document.getElementById('reviewsDiv');
+      await fetch(urlReviews)
+        .then((res) => res.json())
+        .then((data) => {
+          const { results } = data;
+          console.log(results);
+          results.map((reviews) => {
+            const review = document.createElement('li');
+            review.classList.add('accordion-item');
+
+            review.innerHTML = `
+                    <a class="item-content item-link" href="#">
+                      <div class="item-inner">
+                        <div class="item-title">${reviews.author}</div>
+                      </div>
+                    </a>
+                    <div class="accordion-item-content maxHeightReview" style="" aria-hidden="true">
+                       
+                        <h4>${reviews.updated_at}</h4>
+                        ${reviews.content}
+                        <span>
+                        <a class="external" href="${reviews.url}" target="_blank">Leer mas...</a>
+                        </span>
+                   
+                    </div>
+            `;
+            reviewsDiv.appendChild(review);
+          });
+        });
+    } else {
+      const reviewsDiv = document.getElementById('reviewsDiv');
+      await fetch(url3)
+        .then((res) => res.json())
+        .then((data) => {
+          const { results } = data;
+          console.log(results);
+          results.map((reviews) => {
+            const review = document.createElement('li');
+            review.classList.add('accordion-item');
+
+            review.innerHTML = `
+                    <a class="item-content item-link" href="#">
+                      <div class="item-inner">
+                        <div class="item-title">${reviews.author}</div>
+                      </div>
+                    </a>
+                    <div class="accordion-item-content maxHeightReview" style="" aria-hidden="true">
+                       
+                        <h4>${reviews.updated_at}</h4>
+                        ${reviews.content}
+                        <span>
+                        <a class="external" href="${reviews.url}" target="_blank">Leer mas...</a>
+                        </span>
+                   
+                    </div>
+            `;
+            reviewsDiv.appendChild(review);
+          });
+        });
+    }
+  }
 
   prev.addEventListener('click', () => {
     if (page > 1) {
@@ -1417,28 +1326,39 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
   ];
 
   const imgProfile = document.getElementById('imgProfile');
-  const borderProfile = document.getElementById('borderProfile');
+
   function rand(n) {
     return Math.floor(Math.random() * n + 1);
   }
+
   if (data.nameUser === 'Invitado') {
     imgProfile.setAttribute(
       'src',
       `./img/imgProfiles/${imgProfiles[rand(16) - 1].img}`
     );
-  } else {
-    imgProfile.setAttribute('src', `./img/imgProfiles/${data.imgUser}.png`);
+  } else if (data.imgUser === '') {
     imgProfile.classList.add('popup-open');
     imgProfile.setAttribute('data-popup', '.popup-selectImg');
+    imgProfile.setAttribute(
+      'src',
+      `./img/imgProfiles/${imgProfiles[rand(16) - 1].img}`
+    );
+  } else {
+    imgProfile.classList.add('popup-open');
+    imgProfile.setAttribute('data-popup', '.popup-selectImg');
+    imgProfile.setAttribute('src', `./img/imgProfiles/${data.imgUser}.png`);
   }
 });
 
 function signOut() {
-  auth.signOut().then(() => {
-    localStorage.removeItem('userData');
-    mainView.router.navigate('/index/');
+  app.dialog.confirm('¿Realmente deseas cerrar sesion?', function () {
+    auth.signOut().then(() => {
+      localStorage.removeItem('userData');
+      mainView.router.navigate('/index/');
+    });
   });
 }
+
 function setImgProfile(id) {
   const imgProfile = document.getElementById('imgProfile');
   const userData = localStorage.getItem('userData');
@@ -1448,17 +1368,11 @@ function setImgProfile(id) {
   imgProfile.setAttribute('src', `./img/imgProfiles/${id}.png`);
 }
 
-$$(document).on('page:init', '.page[data-name="config"]', function (e) {
-  // console.log('otra pagina');
-});
-$$(document).on('page:init', '.page[data-name="about"]', function (e) {
-  // console.log('otra pagina');
-});
 $$(document).on('page:init', '.page[data-name="season"]', function (e) {
   let cont = 0;
   const page = e.detail;
-  var season = page.route.params.season;
-  // alert('La jornada es ' + season);
+  let season = page.route.params.season;
+
   const idUrl =
     baseUrl +
     '/tv/' +
@@ -1472,10 +1386,9 @@ $$(document).on('page:init', '.page[data-name="season"]', function (e) {
       results = data;
       const { seasons } = results;
 
-      const seasonsDiv = document.getElementById('seasonsDiv');
+      const seasonsDiv = document.getElementById('seasonsDivDetails');
 
       seasons.map((SEASON) => {
-        console.log(SEASON);
         const seasonUrl =
           baseUrl +
           '/tv/' +
@@ -1521,7 +1434,6 @@ $$(document).on('page:init', '.page[data-name="season"]', function (e) {
             seasonsDiv.appendChild(seasonDiv);
 
             const episodesDiv = document.getElementById('episodesDiv' + cont);
-            console.log(episodes);
             episodes.map((episode) => {
               const episodeDiv = document.createElement('li');
               episodeDiv.classList.add('accordion-item');
@@ -1539,7 +1451,11 @@ $$(document).on('page:init', '.page[data-name="season"]', function (e) {
                           ? 'No hay descripcion'
                           : episode.overview
                       }</p>
-                      <img src="${imgUrl + episode.still_path}"/>
+                      <img src="${
+                        episode.still_path === null
+                          ? './img/nodisponible.png'
+                          : imgUrl + episode.still_path
+                      }"/>
                       </div>
                   </div>
              `;
